@@ -1,0 +1,100 @@
+*{
+    
+    /* background-color: blue; */
+}
+p,h2{
+    margin:0;
+}
+.pre-query h1{
+    font-family: freight-display-pro, serif;
+    font-size: 60px;
+    font-weight: 800;
+}
+body{
+    background: #eee;
+}
+.res-row{
+    padding: 0px 10%;
+}
+.res-row1{
+    display: flex;
+    margin-top:100px;
+}
+.res-row2{
+    margin-top:-20px;
+    display: flex;
+}
+.nas-rate{
+    /* width:30%; */
+    text-align: center;
+    padding: 20px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#main-rate{
+    font-size: 68px;
+    color: #f15a29;
+    font-family: 'halyard-display', sans-serif;
+    font-weight: 900;
+    /* letter-spacing: -0.05em; */
+}
+.nas-text{
+    /* width:70%; */
+    background: #0683ae;
+    padding: 20px;
+    color: #fff;
+    font-family: 'halyard-display', sans-serif;;
+    font-weight: 300;
+    font-size: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-variant-numeric: lining-nums;
+}
+.bold{
+    font-weight: 700;
+}
+
+.curve{
+    fill: none;
+    stroke: #0683ae;
+    stroke-width: 1px;
+}
+
+
+.break-down-text-col{
+    margin-top: 70px;
+    font-size: 20px;
+}
+.break-down-row{
+    display: flex;
+    font-family: 'halyard-display', sans-serif;
+    font-weight: 100;
+}
+.break-down-row-1{
+    margin-bottom: 38px;
+}
+.break-down-row h3{
+    font-weight: 900;
+    font-size: 32px;
+    padding: 0 10px;
+    min-width: 90px;
+    color: #0683ae;
+    text-align: center;
+}
+.break-down-row div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+}
+/* .break-down-row h3{
+    font-family: 'halyard-display', sans-serif;
+}
+.break-down-row p{
+    font-family: 'halyard-display', sans-serif;
+} */
+svg{
+    /* background: #fff; */
+}

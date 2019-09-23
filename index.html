@@ -1,12 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="https://use.typekit.net/ewr5ovq.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/css/styles.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="./assets/js/d3.min.js"></script>
 </head>
 <body>
+
+    <div class="container">
+        <div class="pre-query">
+            <h1>
+                How many babies in your ZIP-code were exposed to drugs in utero?
+            </h1>
+            <form>
+                <label for="ZIPcode">ZIP-code:</label>
+                <input type="zipcode" id="home-input" class="nas-input" placeholder="78702" value="78702">
+                <button id="home-submit" type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        </div>
+        <div class="after-query">
+
+            <div class="res-row1 res-row">
+                <div class="nas-rate">
+                    <h2 id="main-rate">5.5</h2>
+                </div>
+                <div class="nas-text">
+                    <p>out of 1000 babies born in <span class="bold zip-code">78702</span> over the last three years were exposed to drugs in utero. This number has <span class="change-wording">increased by </span><span class="bold rate-change">1.4%</span> in the last 5 years.  </p>
+                </div>
+            </div>
+
+            <div class="res-row2 res-row">
+
+                <div class="break-down-graph">
+                    <svg class="break-down">
+                        <path class="first">
+                        </path>
+                        <path class="second">
+                        </path>
+                    </svg>
+                </div>
+                <div class="break-down-text-col">
+                    <div class="break-down-row break-down-row-1">
+                       <div><h3 id="opioid-p">9%</h3></div>
+                       <div>
+                           <p>were exposed to opioids.</p>
+                       </div>
+                    </div>
+                    <div class="break-down-row break-down-row-2"> 
+                       <div><h3 id="other-p">91%</h3></div>
+                       <div>
+                           <p>were exposed to cocaine, methamphetamines, marijuana, or benzodiazepines. </p>
+                       </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
     
+    <script src="./assets/js/app.js"></script>
 </body>
 </html>
