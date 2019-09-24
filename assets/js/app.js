@@ -1,5 +1,5 @@
 var req_zip;
-var api_URL= "http://intense-tor-20370.herokuapp.com/api/nas/nas_zip/"
+var api_URL= "https://intense-tor-20370.herokuapp.com/api/nas/nas_zip/"
 
 
 
