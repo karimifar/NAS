@@ -128,7 +128,7 @@ function createLineChart(dataset1, dataset2){
         svg.append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(yScale)
-            // .tickValues([1, 2])
+            .tickValues([1, 3, 5,10,15,20,30,40,50,60])
             // .ticks(50)
             .tickSize(1)
             ); // Create an axis component with d3.axisLeft
