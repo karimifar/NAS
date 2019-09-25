@@ -104,7 +104,7 @@ svg{
 .line {
     fill: none;
     stroke: #ffab00;
-    stroke-width: 3;
+    stroke-width: 1;
 }
 .dot1 {
     fill: #ffab00;
@@ -117,7 +117,7 @@ svg{
 .line2 {
     fill: none;
     stroke: #bbb;
-    stroke-width: 3;
+    stroke-width: 1;
 }
   
 .overlay {

@@ -13,6 +13,7 @@ $("#home-submit").on("click", function(event){
 function queryZip(zip){
     var req_url= api_URL + zip
     console.log(api_URL)
+
     $.get(req_url, function(data){
         console.log(data)
         var nas_rate= data[4].nas_rate;
@@ -30,6 +31,15 @@ function queryZip(zip){
             $(".change-wording").text("not changed")
             $(".rate-change").text("")
         }
+
+        var zip_nas_trend = []
+        var zip_pnd_trend = []
+        for (var i=0; i<data.length; i++){
+            zip_nas_trend.push({"y":data[i].nas_rate})
+            zip_pnd_trend.push({"y":data[i].pndexp_rate}) 
+            console.log(zip_pnd_trend)
+        }
+        createLineChart(zip_nas_trend, zip_pnd_trend);
 
         var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
         $("#opioid-p").text(opioid_p+"%")
@@ -71,10 +81,11 @@ d3.select('svg.break-down')
     .attr("class","curve second")
 
 
-function createLineChart(){
+function createLineChart(dataset1, dataset2){
+    $(".lineChart").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
     var width = 300;
-    var height= 200;
+    var height= 300;
     var n = 5;
     var domain = ["2013", "2014", "2015", "2016", "2017"]
     var xScale = d3.scaleBand()
@@ -84,7 +95,7 @@ function createLineChart(){
 
     // 6. Y scale will use the randomly generate number 
     var yScale = d3.scaleLinear()
-        .domain([0, 2]) // input 
+        .domain([0, 60]) // input 
         .range([height, 0]) // output 
 
         var line = d3.line()
@@ -93,8 +104,8 @@ function createLineChart(){
         .curve(d3.curveMonotoneX)
 
     //replace with actual data
-    var dataset1 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
-    var dataset2 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
+    // var dataset1 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
+    // var dataset2 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
 
 
     var svg= d3.select(".lineChart")
@@ -117,8 +128,8 @@ function createLineChart(){
         svg.append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(yScale)
-            .tickValues([1, 2])
-            // .ticks(2)
+            // .tickValues([1, 2])
+            // .ticks(50)
             .tickSize(1)
             ); // Create an axis component with d3.axisLeft
         
@@ -133,7 +144,7 @@ function createLineChart(){
         .attr("class", "dot1") // Assign a class for styling
         .attr("cx", function(d, i) { return xScale(domain[i])+30 })
         .attr("cy", function(d) { return yScale(d.y) })
-        .attr("r", 5);
+        .attr("r", 4);
 
         svg.append("path")
             .datum(dataset2) // 10. Binds data to the line 
@@ -146,7 +157,6 @@ function createLineChart(){
         .attr("class", "dot2") // Assign a class for styling
         .attr("cx", function(d, i) { return xScale(domain[i])+30 })
         .attr("cy", function(d) { return yScale(d.y) })
-        .attr("r", 5);
+        .attr("r", 4);
 }
 
-createLineChart();
