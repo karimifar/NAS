@@ -71,28 +71,32 @@ d3.select('svg.break-down')
     .attr("class","curve second")
 
 
-function createBarChart(){
+function createLineChart(){
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
     var width = 300;
     var height= 200;
     var n = 5;
-    var xScale = d3.scaleLinear()
-        .domain(["2013", "2014", "2015", "2016", "2017"])
-        .range([height,0]);
+    var domain = ["2013", "2014", "2015", "2016", "2017"]
+    var xScale = d3.scaleBand()
+        .domain(domain)
+        // .domain([0,n-1])
+        .range([0, width]);
 
     // 6. Y scale will use the randomly generate number 
     var yScale = d3.scaleLinear()
         .domain([0, 2]) // input 
-        .range([height, 0]); // output 
+        .range([height, 0]) // output 
 
-    var line = d3.line()
-        .x(function(d,i){return xScale(i);})
+        var line = d3.line()
+        .x(function(d,i){return xScale(domain[i])+30;})
         .y(function(d){return yScale(d.y);})
         .curve(d3.curveMonotoneX)
 
     //replace with actual data
-    var dataset = d3.range(n).map(function(d){return{"y":d3.randomUniform(1)()}})
-    console.log(dataset)
+    var dataset1 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
+    var dataset2 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
+
+
     var svg= d3.select(".lineChart")
         .attr("width", width+margin.left+margin.right)
         .attr("height", height+margin.top+margin.bottom)
@@ -104,16 +108,45 @@ function createBarChart(){
             .attr("transform", "translate(0," + height + ")")
             .call(
                 d3.axisBottom(xScale)
+                .tickPadding(10)
+                .tickSize(5)
                 // .tickFormat(d3.format(",.2s"))
                 ); // Create an axis component with d3.axisBottom
             
 
         svg.append("g")
             .attr("class", "y axis")
-            .call(d3.axisLeft(yScale)); // Create an axis component with d3.axisLeft
+            .call(d3.axisLeft(yScale)
+            .tickValues([1, 2])
+            // .ticks(2)
+            .tickSize(1)
+            ); // Create an axis component with d3.axisLeft
         
         svg.append("path")
-            .datum(dataset) // 10. Binds data to the line 
+            .datum(dataset1) // 10. Binds data to the line 
             .attr("class", "line") // Assign a class for styling 
             .attr("d", line); // 11. Calls the line generator 
+
+        svg.selectAll(".dot")
+        .data(dataset1)
+        .enter().append("circle") // Uses the enter().append() method
+        .attr("class", "dot1") // Assign a class for styling
+        .attr("cx", function(d, i) { return xScale(domain[i])+30 })
+        .attr("cy", function(d) { return yScale(d.y) })
+        .attr("r", 5);
+
+        svg.append("path")
+            .datum(dataset2) // 10. Binds data to the line 
+            .attr("class", "line2") // Assign a class for styling 
+            .attr("d", line); // 11. Calls the line generator 
+
+        svg.selectAll(".dot2")
+        .data(dataset2)
+        .enter().append("circle") // Uses the enter().append() method
+        .attr("class", "dot2") // Assign a class for styling
+        .attr("cx", function(d, i) { return xScale(domain[i])+30 })
+        .attr("cy", function(d) { return yScale(d.y) })
+        .attr("r", 5);
 }
+
+createLineChart();

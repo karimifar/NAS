@@ -106,6 +106,19 @@ svg{
     stroke: #ffab00;
     stroke-width: 3;
 }
+.dot1 {
+    fill: #ffab00;
+    stroke: #fff;
+}
+.dot2 {
+    fill: #bbb;
+    stroke: #fff;
+}
+.line2 {
+    fill: none;
+    stroke: #bbb;
+    stroke-width: 3;
+}
   
 .overlay {
   fill: none;
