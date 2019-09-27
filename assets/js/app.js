@@ -26,9 +26,12 @@ $("#home-submit").on("click", function(event){
 function queryZip(zip){
     var req_url= api_URL + zip
     console.log(api_URL)
-
+    $(".test").removeClass("invisible")
     $.get(req_url, function(data){
         console.log(data)
+        if(data){
+            $(".test").addClass("invisible")
+        }
         var nas_rate= data[4].nas_rate;
         var pnd_rate= data[4].pndexp_rate
         $("#main-rate").text(pnd_rate)
@@ -114,6 +117,7 @@ function createLineChart(dataArray){
         var line = d3.line()
         .x(function(d,i){return xScale(domain[i])+30;})
         .y(function(d){return yScale(d.y);})
+        // .curve(d3.curveCardinal.tension(0))
         .curve(d3.curveMonotoneX)
 
     //replace with actual data
