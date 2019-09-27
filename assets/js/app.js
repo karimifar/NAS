@@ -97,7 +97,7 @@ d3.select('svg.break-down')
 function createLineChart(dataArray){
     $(".lineChart").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
-    var width = 300;
+    var width = 400;
     var height= 300;
     var n = 5;
     var domain = ["2013", "2014", "2015", "2016", "2017"]
@@ -151,6 +151,7 @@ function createLineChart(dataArray){
         }
         var div = d3.select("#lineChart-wrap").append("div")
             .attr("class", "tooltip")
+            .style("display","none")
             .style("opacity", 0);
 
         function chartLineGenerator(dataset,className){
@@ -169,6 +170,7 @@ function createLineChart(dataArray){
                 .on("mouseover", function (d) {
                     div.transition()
                         .duration(200)
+                        .style("display","block")
                         .style("opacity", .9);
                     div.html("<p>"+d.y + "</p>")
                         .style("left", (d3.event.pageX-10) + "px")
@@ -177,6 +179,7 @@ function createLineChart(dataArray){
                 .on("mouseleave", function (d) {
                     div.transition()
                         .duration(200)
+                        .style("display","none")
                         .style("opacity", 0)
                 })
         }

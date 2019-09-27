@@ -135,10 +135,8 @@ svg{
     stroke: #fff;
 }
 
-  
-.overlay {
-  fill: none;
-  pointer-events: all;
+.chartDot:hover{
+    stroke: #bbb
 }
 
 .tooltip{
@@ -148,7 +146,6 @@ svg{
     border-radius: 3px;
 }
 .tooltip p{
-    
     color: #0683ae;
     font-family: 'halyard-text', sans-serif;
     font-size: 12px;
