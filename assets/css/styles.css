@@ -99,28 +99,58 @@ svg{
     /* background: #fff; */
 }
 
-
-
-.line {
+.chartLine{
     fill: none;
-    stroke: #ffab00;
     stroke-width: 1;
 }
-.dot1 {
-    fill: #ffab00;
-    stroke: #fff;
+.line1 {
+    stroke: #d4508790;
+    stroke-dasharray: 2
 }
-.dot2 {
-    fill: #bbb;
+.line1-dot {
+    fill: #d4508790;
     stroke: #fff;
 }
 .line2 {
-    fill: none;
-    stroke: #bbb;
-    stroke-width: 1;
+    stroke: #003f5c90;
+    stroke-dasharray: 2
 }
+.line2-dot {
+    fill: #003f5c90;
+    stroke: #fff;
+}
+.line3 {
+    stroke: #d45087;
+}
+.line3-dot {
+    fill: #d45087;
+    stroke: #fff;
+}
+
+.line4 {
+    stroke: #003f5c;
+}
+.line4-dot {
+    fill: #003f5c;
+    stroke: #fff;
+}
+
   
 .overlay {
   fill: none;
   pointer-events: all;
+}
+
+.tooltip{
+    padding: 3px;
+    background:#fff;
+    min-width: 20px;
+    border-radius: 3px;
+}
+.tooltip p{
+    
+    color: #0683ae;
+    font-family: 'halyard-text', sans-serif;
+    font-size: 12px;
+    text-align: center;
 }

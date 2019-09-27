@@ -1,7 +1,20 @@
 var req_zip;
 var api_URL= "https://intense-tor-20370.herokuapp.com/api/nas/nas_zip/"
 
-
+var state_pnd_trend=[
+    {"y": 10.0},
+    {"y": 9.0},
+    {"y": 10.0},
+    {"y": 9.0},
+    {"y": 10.0},
+]
+var state_nas_trend=[
+    {"y": 1.0},
+    {"y": 2.0},
+    {"y": 1.0},
+    {"y": 2.0},
+    {"y": 1.0},
+]
 
 $("#home-submit").on("click", function(event){
     event.preventDefault();
@@ -39,7 +52,7 @@ function queryZip(zip){
             zip_pnd_trend.push({"y":data[i].pndexp_rate}) 
             console.log(zip_pnd_trend)
         }
-        createLineChart(zip_nas_trend, zip_pnd_trend);
+        createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
 
         var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
         $("#opioid-p").text(opioid_p+"%")
@@ -81,7 +94,7 @@ d3.select('svg.break-down')
     .attr("class","curve second")
 
 
-function createLineChart(dataset1, dataset2){
+function createLineChart(dataArray){
     $(".lineChart").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
     var width = 300;
@@ -132,31 +145,41 @@ function createLineChart(dataset1, dataset2){
             // .ticks(50)
             .tickSize(1)
             ); // Create an axis component with d3.axisLeft
+
+        for(var i=0; i<dataArray.length; i++){
+            chartLineGenerator(dataArray[i],"line"+(i+1))
+        }
+        var div = d3.select("#lineChart-wrap").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+        function chartLineGenerator(dataset,className){
+            svg.append("path")
+                .datum(dataset) // 10. Binds data to the line 
+                .attr("class", "chartLine "+className) // Assign a class for styling 
+                .attr("d", line); // 11. Calls the line generator 
         
-        svg.append("path")
-            .datum(dataset1) // 10. Binds data to the line 
-            .attr("class", "line") // Assign a class for styling 
-            .attr("d", line); // 11. Calls the line generator 
+            svg.selectAll(".dot")
+                .data(dataset)
+                .enter().append("circle") // Uses the enter().append() method
+                .attr("class", className+"-dot chartDot") // Assign a class for styling
+                .attr("cx", function(d, i) { return xScale(domain[i])+30 })
+                .attr("cy", function(d) { return yScale(d.y) })
+                .attr("r", 4)
+                .on("mouseover", function (d) {
+                    div.transition()
+                        .duration(200)
+                        .style("opacity", .9);
+                    div.html("<p>"+d.y + "</p>")
+                        .style("left", (d3.event.pageX-10) + "px")
+                        .style("top", (d3.event.pageY - 30) + "px");
+                })
+                .on("mouseleave", function (d) {
+                    div.transition()
+                        .duration(200)
+                        .style("opacity", 0)
+                })
+        }
+    }
 
-        svg.selectAll(".dot")
-        .data(dataset1)
-        .enter().append("circle") // Uses the enter().append() method
-        .attr("class", "dot1") // Assign a class for styling
-        .attr("cx", function(d, i) { return xScale(domain[i])+30 })
-        .attr("cy", function(d) { return yScale(d.y) })
-        .attr("r", 4);
-
-        svg.append("path")
-            .datum(dataset2) // 10. Binds data to the line 
-            .attr("class", "line2") // Assign a class for styling 
-            .attr("d", line); // 11. Calls the line generator 
-
-        svg.selectAll(".dot2")
-        .data(dataset2)
-        .enter().append("circle") // Uses the enter().append() method
-        .attr("class", "dot2") // Assign a class for styling
-        .attr("cx", function(d, i) { return xScale(domain[i])+30 })
-        .attr("cy", function(d) { return yScale(d.y) })
-        .attr("r", 4);
-}
 
