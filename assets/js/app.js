@@ -1,6 +1,6 @@
 var req_zip;
 var api_URL= "https://intense-tor-20370.herokuapp.com/api/nas/nas_zip/"
-
+var first = true;
 var state_pnd_trend=[
     {"y": 10.0},
     {"y": 9.0},
@@ -26,40 +26,49 @@ $("#home-submit").on("click", function(event){
 function queryZip(zip){
     var req_url= api_URL + zip
     console.log(api_URL)
-    $(".test").removeClass("invisible")
+    // $(".test").removeClass("invisible")
+    startTransitionQuery()
     $.get(req_url, function(data){
+        
         console.log(data)
         if(data){
-            $(".test").addClass("invisible")
-        }
-        var nas_rate= data[4].nas_rate;
-        var pnd_rate= data[4].pndexp_rate
-        $("#main-rate").text(pnd_rate)
-        $(".zip-code").text(data[4].zip)
-        var rate_change = (pnd_rate - data[0].pndexp_rate).toFixed(1)
-        if(rate_change>0){
-            $(".change-wording").text("increased by ")
-            $(".rate-change").text(rate_change)
-        }else if(rate_change<0){
-            $(".change-wording").text("decreased by ")
-            $(".rate-change").text(-1*rate_change)
-        }else{
-            $(".change-wording").text("not changed")
-            $(".rate-change").text("")
-        }
+            $(".after-query").css("display", "block")
+            // $(".test").addClass("invisible")
+            setTimeout(function(){
+                afterDataTransition()
+                var nas_rate= data[4].nas_rate;
+                var pnd_rate= data[4].pndexp_rate
+                $("#main-rate").text(pnd_rate)
+                $(".zip-code").text(data[4].zip)
+                var rate_change = (pnd_rate - data[0].pndexp_rate).toFixed(1)
+                if(rate_change>0){
+                    $(".change-wording").text("increased by ")
+                    $(".rate-change").text(rate_change)
+                }else if(rate_change<0){
+                    $(".change-wording").text("decreased by ")
+                    $(".rate-change").text(-1*rate_change)
+                }else{
+                    $(".change-wording").text("not changed")
+                    $(".rate-change").text("")
+                }
 
-        var zip_nas_trend = []
-        var zip_pnd_trend = []
-        for (var i=0; i<data.length; i++){
-            zip_nas_trend.push({"y":data[i].nas_rate})
-            zip_pnd_trend.push({"y":data[i].pndexp_rate}) 
-            console.log(zip_pnd_trend)
-        }
-        createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
+                var zip_nas_trend = []
+                var zip_pnd_trend = []
+                for (var i=0; i<data.length; i++){
+                    zip_nas_trend.push({"y":data[i].nas_rate})
+                    zip_pnd_trend.push({"y":data[i].pndexp_rate}) 
+                    console.log(zip_pnd_trend)
+                }
+                createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
 
-        var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
-        $("#opioid-p").text(opioid_p+"%")
-        $("#other-p").text(100-opioid_p+"%")
+                var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
+                $("#opioid-p").text(opioid_p+"%")
+                $("#other-p").text(100-opioid_p+"%")
+                
+
+            },400)
+        }
+        
     })
 
     
@@ -72,13 +81,13 @@ var lineGenerator = d3.line()
 	.curve(d3.curveBasis);
 
 var points = [
-    [80, 0],
-    [80,90],
+    [100, 0],
+    [100,90],
 	[150, 90],
 ];
 var points2 = [
-    [80, 0],
-    [80,180],
+    [100, 0],
+    [100,180],
 	[150, 180],
 ];
 
@@ -190,3 +199,16 @@ function createLineChart(dataArray){
     }
 
 
+function startTransitionQuery(){
+    // $("#main-rate").css("background", "#f15a29")
+    $("#main-rate").css("width", "0")
+    $("#main-rate").css("transform", "scale(0)")
+    $("#main-rate").css("opacity", "0")
+    $(".changeble").css("opacity", "0")
+}
+function afterDataTransition(){
+    $("#main-rate").css("transform", "scale(1)")
+    $("#main-rate").css("opacity", "1")
+    $("#main-rate").css("width", "180px")
+    $(".changeble").css("opacity", "1")
+}
