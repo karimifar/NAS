@@ -115,7 +115,7 @@ function createLineChart(dataArray){
         .range([height, 0]) // output 
 
         var line = d3.line()
-        .x(function(d,i){return xScale(domain[i])+30;})
+        .x(function(d,i){return xScale(domain[i])+width/10 ;})
         .y(function(d){return yScale(d.y);})
         // .curve(d3.curveCardinal.tension(0))
         .curve(d3.curveMonotoneX)
@@ -168,7 +168,7 @@ function createLineChart(dataArray){
                 .data(dataset)
                 .enter().append("circle") // Uses the enter().append() method
                 .attr("class", className+"-dot chartDot") // Assign a class for styling
-                .attr("cx", function(d, i) { return xScale(domain[i])+30 })
+                .attr("cx", function(d, i) { return xScale(domain[i])+width/10 })
                 .attr("cy", function(d) { return yScale(d.y) })
                 .attr("r", 4)
                 .on("mouseover", function (d) {

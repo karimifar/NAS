@@ -2,12 +2,13 @@
     
     /* background-color: blue; */
 }
+
 p,h2{
     margin:0;
 }
 .pre-query h1{
     font-family: freight-display-pro, serif;
-    font-size: 60px;
+    font-size: 30px;
     font-weight: 800;
 }
 body{
@@ -18,7 +19,7 @@ body{
 }
 .res-row1{
     display: flex;
-    margin-top:100px;
+    margin-top:50px;
 }
 .res-row2{
     margin-top:-20px;
