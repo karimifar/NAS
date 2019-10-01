@@ -26,12 +26,15 @@ $("#home-submit").on("click", function(event){
 function queryZip(zip){
     var req_url= api_URL + zip
     console.log(api_URL)
+    $(".pre-query").css("height","80px")
+    $(".pre-query").addClass("started")
     // $(".test").removeClass("invisible")
     startTransitionQuery()
     $.get(req_url, function(data){
         
         console.log(data)
         if(data){
+            $("#home-input").text(" ")
             $(".after-query").css("display", "block")
             // $(".test").addClass("invisible")
             setTimeout(function(){
