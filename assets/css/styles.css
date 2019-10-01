@@ -102,7 +102,7 @@ body{
     visibility: hidden;
 }
 .pre-query.started form{
-    /* width:60px; */
+    width:250px;
     margin:0;
     margin-top:-10px;
     padding:10px;
@@ -115,23 +115,28 @@ body{
     padding: 10px 20px;
     font-size: 30px;
     text-align: left;
-    background: #fff;
+    background: #0683ae;
     color: #ffffff00;
     transition: all 0.2s ease-in-out;
 }
 
-.pre-query.started #home-input:hover{
+.pre-query.started form:hover #home-input{
     width:200px;
+    background: #fff;
     color:#f15a29;
+}
+.pre-query.started form:hover #home-submit{
+    color:#0683ae;
 }
 .pre-query.started #home-input:focus{
     width:200px;
+    background: #fff;
     color:#f15a29;
 }
 .pre-query.started #home-submit{
     margin-left: -58px;
     background:none;
-    color:#aaa;
+    color:#fff;
     border: none;
     font-size: 20px;
     margin-bottom: 18px;
