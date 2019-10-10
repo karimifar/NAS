@@ -39,7 +39,7 @@ label{
     color: #f15a29;
 }
 .after-query{
-    padding: 0 10%;
+    /* padding: 0 10%; */
     display: none;
 }
 form{
@@ -144,21 +144,37 @@ body{
     /* pointer-events:none; */
 
 }
-.res-row{
-    padding: 0px 10%;
+.chart-col{
+    min-width: 500px;
+    max-width:1200px;
+    width: 40%;
 }
-.res-row1{
+.desc-col{
+    min-width: 600px;
+    max-width:1200px;
+    width:60%;
+    padding-left: 50px;
+}
+.res-row{
+    display: flex;
+    flex-wrap: wrap;
+}
+.desc-row{
+    padding: 0px 20px;
+}
+.desc-row1{
     display: flex;
     margin: auto;
     margin-top:50px;
-    max-width:1200px;
+    width:100%
     
 }
-.res-row2{
+.desc-row2{
     margin: auto;
     max-width:1200px;
     margin-top:-20px;
     display: flex;
+    width:100%
 }
 .nas-rate{
     /* width:30%; */
@@ -240,7 +256,7 @@ body{
     font-family: 'halyard-display', sans-serif;
 } */
 svg{
-    /* background: #fff; */
+    width: 100%;
 }
 
 .chartLine{
@@ -300,3 +316,8 @@ svg{
     display: none;
 }
 
+
+
+.mostzips{
+    fill:red;
+}

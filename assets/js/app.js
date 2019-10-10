@@ -2,18 +2,38 @@ var req_zip;
 var api_URL= "https://intense-tor-20370.herokuapp.com/api/nas/nas_zip/"
 var first = true;
 var state_pnd_trend=[
-    {"y": 10.0},
-    {"y": 9.0},
-    {"y": 10.0},
-    {"y": 9.0},
-    {"y": 10.0},
+    {"y": "4.8"},
+    {"y": "5.4"},
+    {"y": "6.1"},
+    {"y": "6.4"},
+    {"y": "6.3"},
+    {"y": "6.1"},
+    {"y": "6.2"},
+    {"y": "6.9"},
+    {"y": "7.7"},
+    {"y": "8.3"},
+    {"y": "8.8"},
+    {"y": "9.3"},
+    {"y": "9.6"},
+    {"y": "9.5"},
+    {"y": "9.5"},
 ]
 var state_nas_trend=[
-    {"y": 1.0},
-    {"y": 2.0},
-    {"y": 1.0},
-    {"y": 2.0},
-    {"y": 1.0},
+    {"y": "0.8"},
+    {"y": "0.9"},
+    {"y": "1"},
+    {"y": "1.1"},
+    {"y": "1.3"},
+    {"y": "1.4"},
+    {"y": "1.6"},
+    {"y": "1.8"},
+    {"y": "2.0"},
+    {"y": "2.2"},
+    {"y": "2.4"},
+    {"y": "2.5"},
+    {"y": "2.6"},
+    {"y": "2.6"},
+    {"y": "2.5"},
 ]
 
 $("#home-submit").on("click", function(event){
@@ -39,8 +59,8 @@ function queryZip(zip){
             // $(".test").addClass("invisible")
             setTimeout(function(){
                 afterDataTransition()
-                var nas_rate= data[4].nas_rate;
-                var pnd_rate= data[4].pndexp_rate
+                var nas_rate= data[14].nas_rate;
+                var pnd_rate= data[14].pndexp_rate
                 $("#main-rate").text(pnd_rate)
                 $(".zip-code").text(data[4].zip)
                 var rate_change = (pnd_rate - data[0].pndexp_rate).toFixed(1)
@@ -108,14 +128,70 @@ d3.select('svg.break-down')
     .attr('d', pathData2)
     .attr("class","curve second")
 
+function createDistBox(dataArray){
+    $(".distBox").empty()
+    var margin = {top: 50, right: 50, bottom: 50, left: 50};
+    var width = 500;
+    var height= 75;
+    var xScale= d3.scaleLinear()
+        .domain([0,40])
+        .range([0,width])
+
+    var svg= d3.select(".distBox")
+    .attr("width", width+margin.left+margin.right)
+    .attr("height", height+margin.top+margin.bottom)
+    .attr("viewBox", "0 0 " + (width+margin.left+margin.right).toString()+ " " +(height+margin.top+margin.bottom).toString() )
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," +margin.top+")");
+
+    svg.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(
+            d3.axisBottom(xScale)
+            .tickPadding(5)
+            .tickSize(0)
+            .tickValues([0,8,12,40])
+            // .tickFormat(d3.format(",.2s"))
+            ); // Create an axis component with d3.axisBottom
+            
+    svg.append("g")
+        .append("rect")
+        .attr("y", 0)
+        .attr("height", height)
+        .attr("width", width)
+
+    svg.append("g")
+        .append("rect")
+        .attr("y", 0)
+        .attr("height", height)
+        .attr("width", xScale(4))
+        .attr("class", "mostzips")
+        .attr("transform","translate("+xScale(8)+" , 0)")
+
+    svg.append("text")
+        .text("all zip codes")
+        .attr("fill", "#fff")
+        .attr("x", width-95)
+        .attr("y", height-5)
+
+    svg.append("text")
+        .text("Most zip codes")
+        .attr("fill", "#fff")
+        .attr("x", xScale(12)+5)
+        .attr("y", height-5)
+
+}
+
+
 
 function createLineChart(dataArray){
     $(".lineChart").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
-    var width = 400;
+    var width = 500;
     var height= 300;
-    var n = 5;
-    var domain = ["2013", "2014", "2015", "2016", "2017"]
+    var n = 15;
+    var domain = ["2004","2005","2006","2007","2008","2009","2010","2011","2012","2013", "2014", "2015", "2016", "2017", "2018"]
     var xScale = d3.scaleBand()
         .domain(domain)
         // .domain([0,n-1])
@@ -127,19 +203,17 @@ function createLineChart(dataArray){
         .range([height, 0]) // output 
 
         var line = d3.line()
-        .x(function(d,i){return xScale(domain[i])+width/10 ;})
+        .x(function(d,i){return xScale(domain[i])+width/(2*n) ;})
         .y(function(d){return yScale(d.y);})
         // .curve(d3.curveCardinal.tension(0))
         .curve(d3.curveMonotoneX)
 
-    //replace with actual data
-    // var dataset1 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
-    // var dataset2 = d3.range(n).map(function(d){return{"y":d3.randomUniform(2)()}})
 
 
     var svg= d3.select(".lineChart")
         .attr("width", width+margin.left+margin.right)
         .attr("height", height+margin.top+margin.bottom)
+        .attr("viewBox", "0 0 " + (width+margin.left+margin.right).toString()+ " " +(height+margin.top+margin.bottom).toString() )
         .append("g")
         .attr("transform", "translate(" + margin.left + "," +margin.top+")");
 
@@ -148,7 +222,7 @@ function createLineChart(dataArray){
             .attr("transform", "translate(0," + height + ")")
             .call(
                 d3.axisBottom(xScale)
-                .tickPadding(10)
+                .tickPadding(5)
                 .tickSize(5)
                 // .tickFormat(d3.format(",.2s"))
                 ); // Create an axis component with d3.axisBottom
@@ -180,9 +254,9 @@ function createLineChart(dataArray){
                 .data(dataset)
                 .enter().append("circle") // Uses the enter().append() method
                 .attr("class", className+"-dot chartDot") // Assign a class for styling
-                .attr("cx", function(d, i) { return xScale(domain[i])+width/10 })
+                .attr("cx", function(d, i) { return xScale(domain[i])+width/(2*n) })
                 .attr("cy", function(d) { return yScale(d.y) })
-                .attr("r", 4)
+                .attr("r", 3)
                 .on("mouseover", function (d) {
                     div.transition()
                         .duration(200)
