@@ -83,7 +83,7 @@ function queryZip(zip){
                     console.log(zip_pnd_trend)
                 }
                 createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
-
+                createDistBox(pnd_rate);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
                 $("#opioid-p").text(opioid_p+"%")
                 $("#other-p").text(100-opioid_p+"%")
@@ -128,7 +128,7 @@ d3.select('svg.break-down')
     .attr('d', pathData2)
     .attr("class","curve second")
 
-function createDistBox(dataArray){
+function createDistBox(data){
     $(".distBox").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
     var width = 500;
@@ -138,6 +138,18 @@ function createDistBox(dataArray){
         .range([0,width])
 
     var svg= d3.select(".distBox")
+    .attr("class",function(){
+        var rate = data
+        switch(true){
+            case(rate<8):
+                return "distBox underrate";
+            case(rate>12):
+                return "distBox overrate";
+            case(8<rate<12):
+                return "distBox";           
+        }
+
+    })
     .attr("width", width+margin.left+margin.right)
     .attr("height", height+margin.top+margin.bottom)
     .attr("viewBox", "0 0 " + (width+margin.left+margin.right).toString()+ " " +(height+margin.top+margin.bottom).toString() )
@@ -156,30 +168,82 @@ function createDistBox(dataArray){
             ); // Create an axis component with d3.axisBottom
             
     svg.append("g")
+        .attr("id", "allzips")
         .append("rect")
         .attr("y", 0)
+        .attr("x", 0)
         .attr("height", height)
         .attr("width", width)
+        .attr("class", "allzips")
 
     svg.append("g")
+        .attr("id","mostzips")
         .append("rect")
         .attr("y", 0)
+        .attr("x", 0)
         .attr("height", height)
         .attr("width", xScale(4))
         .attr("class", "mostzips")
         .attr("transform","translate("+xScale(8)+" , 0)")
 
-    svg.append("text")
-        .text("all zip codes")
-        .attr("fill", "#fff")
-        .attr("x", width-95)
-        .attr("y", height-5)
+    svg.select("#allzips").append("text")
+        .text("All ZIP-codes")
+        .attr("class", "dist-text")
+        .attr("x", function(){
+            if(data>8){
+                return 5
+            }else{
+                var textWidth = this.getBBox().width
+                return width-textWidth-5
+            }
+        })
+        .attr("y", -5)
+        .attr("class", "dist-all-text dist-text")
 
-    svg.append("text")
+
+    svg.select("#mostzips").append("text")
         .text("Most zip codes")
-        .attr("fill", "#fff")
+        .attr("class", "dist-most-text dist-text")
         .attr("x", xScale(12)+5)
         .attr("y", height-5)
+
+    svg.append("g")
+        .attr("id","thezip")
+        .append("line")
+        .attr("class","thezip-line")
+        .attr("x1",xScale(data))
+        .attr("y1",-7)
+        .attr("x2",xScale(data))
+        .attr("y2",height +7)
+
+    svg.select("#thezip").append("text")
+        .attr("class","thezip-text dist-text")
+        .text("Where this zip code stands")
+        .attr("x", function(){
+            var textWidth = this.getBBox().width
+            return xScale(data) - textWidth/2
+        })
+        .attr("y", -20)
+    svg.select("#thezip").append("path")
+        .attr("d", "M "+xScale(data)+" -8 L "+(xScale(data)-4)+" -15 L " +(xScale(data)+4)+" -15 L "+xScale(data)+" -8")
+        .attr("id","dist-triangle")
+
+    svg.select("#thezip").append("text")
+        .text(data)
+        .attr("class","dist-text")
+        .attr("x", function(){
+            var textWidth = this.getBBox().width
+            return xScale(data) - textWidth/2 
+        })
+        .attr("y",height+20)
+        .attr("class", "dist-text thezip-rate")
+
+    svg.select("#thezip").append("rect")
+        .attr("x", xScale(data)-20)
+        .attr("y", -20)
+        .attr("width", 40)
+        .attr("height", height+20)
+        .attr("opacity",0)
 
 }
 
