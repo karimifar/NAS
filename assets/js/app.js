@@ -2,38 +2,38 @@ var req_zip;
 var api_URL= "https://intense-tor-20370.herokuapp.com/api/nas/nas_zip/"
 var first = true;
 var state_pnd_trend=[
-    {"y": "4.8"},
-    {"y": "5.4"},
-    {"y": "6.1"},
-    {"y": "6.4"},
-    {"y": "6.3"},
-    {"y": "6.1"},
-    {"y": "6.2"},
-    {"y": "6.9"},
-    {"y": "7.7"},
-    {"y": "8.3"},
-    {"y": "8.8"},
-    {"y": "9.3"},
-    {"y": "9.6"},
-    {"y": "9.5"},
-    {"y": "9.5"},
+    {"y": "4.8" ,"i":0},
+    {"y": "5.4", "i":1},
+    {"y": "6.1", "i":2},
+    {"y": "6.4", "i":3},
+    {"y": "6.3", "i":4},
+    {"y": "6.1", "i":5},
+    {"y": "6.2", "i":6},
+    {"y": "6.9", "i":7},
+    {"y": "7.7", "i":8},
+    {"y": "8.3", "i":9},
+    {"y": "8.8", "i":10},
+    {"y": "9.3", "i":11},
+    {"y": "9.6", "i":12},
+    {"y": "9.5", "i":13},
+    {"y": "9.5", "i":14},
 ]
 var state_nas_trend=[
-    {"y": "0.8"},
-    {"y": "0.9"},
-    {"y": "1"},
-    {"y": "1.1"},
-    {"y": "1.3"},
-    {"y": "1.4"},
-    {"y": "1.6"},
-    {"y": "1.8"},
-    {"y": "2.0"},
-    {"y": "2.2"},
-    {"y": "2.4"},
-    {"y": "2.5"},
-    {"y": "2.6"},
-    {"y": "2.6"},
-    {"y": "2.5"},
+    {"y": "0.8", "i":0},
+    {"y": "0.9", "i":1},
+    {"y": "1", "i":2},
+    {"y": "1.1", "i":3},
+    {"y": "1.3", "i":4},
+    {"y": "1.4", "i":5},
+    {"y": "1.6", "i":6},
+    {"y": "1.8", "i":7},
+    {"y": "2.0", "i":8},
+    {"y": "2.2", "i":9},
+    {"y": "2.4", "i":10},
+    {"y": "2.5", "i":11},
+    {"y": "2.6", "i":12},
+    {"y": "2.6", "i":13},
+    {"y": "2.5", "i":14},
 ]
 
 $("#home-submit").on("click", function(event){
@@ -46,14 +46,15 @@ $("#home-submit").on("click", function(event){
 function queryZip(zip){
     var req_url= api_URL + zip
     console.log(api_URL)
-    $(".pre-query").css("height","80px")
-    $(".pre-query").addClass("started")
+    
     // $(".test").removeClass("invisible")
     startTransitionQuery()
     $.get(req_url, function(data){
         
         console.log(data)
-        if(data){
+        if(data && data[14].pndexp_rate!=-1){
+            $(".pre-query").css("height","80px")
+            $(".pre-query").addClass("started")
             $("#home-input").text(" ")
             $(".after-query").css("display", "block")
             // $(".test").addClass("invisible")
@@ -78,8 +79,12 @@ function queryZip(zip){
                 var zip_nas_trend = []
                 var zip_pnd_trend = []
                 for (var i=0; i<data.length; i++){
-                    zip_nas_trend.push({"y":data[i].nas_rate})
-                    zip_pnd_trend.push({"y":data[i].pndexp_rate}) 
+                    if(data[i].nas_rate != -1){
+                        zip_nas_trend.push({"y":data[i].nas_rate, "i": i})
+                    }
+                    if(data[i].pndexp_rate != -1){
+                        zip_pnd_trend.push({"y":data[i].pndexp_rate, "i":i}) 
+                    }
                     console.log(zip_pnd_trend)
                 }
                 createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
@@ -90,6 +95,8 @@ function queryZip(zip){
                 
 
             },400)
+        }else{
+            alert("no data for this zip")
         }
         
     })
@@ -251,7 +258,7 @@ function createDistBox(data){
 
 function createLineChart(dataArray){
     $(".lineChart").empty()
-    var margin = {top: 50, right: 50, bottom: 50, left: 50};
+    var margin = {top: 25, right: 50, bottom: 25, left: 50};
     var width = 500;
     var height= 300;
     var n = 15;
@@ -267,7 +274,7 @@ function createLineChart(dataArray){
         .range([height, 0]) // output 
 
         var line = d3.line()
-        .x(function(d,i){return xScale(domain[i])+width/(2*n) ;})
+        .x(function(d,i){return xScale(domain[d.i])+width/(2*n) ;})
         .y(function(d){return yScale(d.y);})
         // .curve(d3.curveCardinal.tension(0))
         .curve(d3.curveMonotoneX)
@@ -318,7 +325,7 @@ function createLineChart(dataArray){
                 .data(dataset)
                 .enter().append("circle") // Uses the enter().append() method
                 .attr("class", className+"-dot chartDot") // Assign a class for styling
-                .attr("cx", function(d, i) { return xScale(domain[i])+width/(2*n) })
+                .attr("cx", function(d, i) { return xScale(domain[d.i])+width/(2*n) })
                 .attr("cy", function(d) { return yScale(d.y) })
                 .attr("r", 3)
                 .on("mouseover", function (d) {
