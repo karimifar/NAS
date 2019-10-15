@@ -261,7 +261,12 @@ svg{
 
 .chartLine{
     fill: none;
-    stroke-width: 1;
+    stroke-width: 4;
+    opacity: 0.6;
+}
+.chartLine:hover{
+    stroke-width: 5;
+    opacity: 0.85;
 }
 .line1 {
     stroke: #d4508790;
@@ -296,7 +301,8 @@ svg{
 }
 
 .chartDot:hover{
-    stroke: #bbb
+    stroke: #bbb;
+    cursor: pointer;
 }
 
 .tooltip{

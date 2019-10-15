@@ -327,7 +327,7 @@ function createLineChart(dataArray){
                 .attr("class", className+"-dot chartDot") // Assign a class for styling
                 .attr("cx", function(d, i) { return xScale(domain[d.i])+width/(2*n) })
                 .attr("cy", function(d) { return yScale(d.y) })
-                .attr("r", 3)
+                .attr("r", 4)
                 .on("mouseover", function (d) {
                     div.transition()
                         .duration(200)
