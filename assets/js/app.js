@@ -139,9 +139,9 @@ function createDistBox(data){
     $(".distBox").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
     var width = 500;
-    var height= 75;
+    var height= 50;
     var xScale= d3.scaleLinear()
-        .domain([0,40])
+        .domain([0,69])
         .range([0,width])
 
     var svg= d3.select(".distBox")
@@ -163,15 +163,31 @@ function createDistBox(data){
     .append("g")
     .attr("transform", "translate(" + margin.left + "," +margin.top+")");
 
+    //the gradient definition
+    svg.append("defs")
+        .append("linearGradient")
+        .attr("id","grad1")
+        .attr("x1", "10%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%")
+        .append("stop")
+        .attr("offset","0%")
+        .style("stop-color","#3f91c4" )
+    d3.select("#grad1")
+        .append("stop")
+        .attr("offset","100%")
+        .style("stop-color","#736a7f" )
+
     svg.append("g")
         .attr("class", "x axis")
         .attr("transform", "translate(0," + height + ")")
         .call(
             d3.axisBottom(xScale)
             .tickPadding(5)
-            .tickSize(0)
-            .tickValues([0,8,12,40])
-            // .tickFormat(d3.format(",.2s"))
+            .tickSize(3)
+            .tickValues([0,8,12,34.5,69])
+            .tickFormat(d3.format(",.3"))
             ); // Create an axis component with d3.axisBottom
             
     svg.append("g")
@@ -182,6 +198,7 @@ function createDistBox(data){
         .attr("height", height)
         .attr("width", width)
         .attr("class", "allzips")
+        .attr("fill","url(#grad1)")
 
     svg.append("g")
         .attr("id","mostzips")
@@ -221,7 +238,7 @@ function createDistBox(data){
         .attr("x1",xScale(data))
         .attr("y1",-7)
         .attr("x2",xScale(data))
-        .attr("y2",height +7)
+        .attr("y2",height +10)
 
     svg.select("#thezip").append("text")
         .attr("class","thezip-text dist-text")
@@ -242,7 +259,7 @@ function createDistBox(data){
             var textWidth = this.getBBox().width
             return xScale(data) - textWidth/2 
         })
-        .attr("y",height+20)
+        .attr("y",height+25)
         .attr("class", "dist-text thezip-rate")
 
     svg.select("#thezip").append("rect")

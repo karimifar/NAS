@@ -91,9 +91,10 @@ body{
 
 
 .pre-query.started{
-    background: #eee;
+    background: none;
     padding: 5px 0;
     align-items: unset;
+    position: absolute;
 }
 .pre-query.started h1{
     display: none;
@@ -134,7 +135,7 @@ body{
     color:#f15a29;
 }
 .pre-query.started #home-submit{
-    margin-left: -58px;
+    margin-left: -55px;
     background:none;
     color:#fff;
     border: none;
@@ -148,30 +149,61 @@ body{
     min-width: 500px;
     max-width:1200px;
     width: 40%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+}
+.chart-row{
+    margin: 10px 0;
+}
+.chart-row .chart-desc{
+    border-top: 1px solid #0683ae;
+    padding-top: 10px;
+}
+.chart-desc{
+    margin: 0 10%;
+}
+.chart-desc h3{
+    font-family: freight-display-pro, serif;
+    font-size: 16px;
+    max-width:400px;
+}
+.chart-desc h3 span{
+    font-family: freight-display-pro, serif;;
 }
 .desc-col{
-    min-width: 600px;
-    max-width:1200px;
+    /* min-width: 600px;
+    max-width:1200px; */
     width:60%;
-    padding-left: 50px;
+    background: #003f5c;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1
 }
 .res-row{
     display: flex;
     flex-wrap: wrap;
 }
 .desc-row{
+    max-width: 800px;
     padding: 0px 20px;
+    margin-left:auto;
+    margin-right:auto;
 }
 .desc-row1{
     display: flex;
-    margin: auto;
-    margin-top:50px;
+    /* margin: auto; */
+    /* margin-top:50px; */
     width:100%
     
 }
 .desc-row2{
-    margin: auto;
-    max-width:1200px;
+    /* margin: auto; */
+    /* max-width:1200px; */
     margin-top:-20px;
     display: flex;
     width:100%
@@ -227,6 +259,7 @@ body{
 .break-down-text-col{
     margin-top: 70px;
     font-size: 20px;
+    color:#fff;
 }
 .break-down-row{
     display: flex;
@@ -327,12 +360,12 @@ svg{
     display: none;
 }
 .mostzips{
-    fill: #003f5c;
-    opacity: 0.65;
+    fill: #006e8c;
+    opacity: 0.75;
 }
 .allzips{
-    fill: #0683ae;
-    opacity: 0.65;
+    /* fill: #0683ae; */
+    opacity: 0.75;
 }
 .dist-text{
     font-size: 11px;
