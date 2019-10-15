@@ -36,7 +36,10 @@ var state_nas_trend=[
     {"y": "2.5", "i":14},
 ]
 
+var hasOver65;
+
 $("#home-submit").on("click", function(event){
+    hasOver65= false;
     event.preventDefault();
     req_zip = $("#home-input").val().trim();
     console.log(req_zip)
@@ -84,6 +87,10 @@ function queryZip(zip){
                     }
                     if(data[i].pndexp_rate != -1){
                         zip_pnd_trend.push({"y":data[i].pndexp_rate, "i":i}) 
+                    }
+
+                    if(data[i].pndexp_rate > 65){
+                        hasOver65=true;
                     }
                     console.log(zip_pnd_trend)
                 }
@@ -284,13 +291,15 @@ function createLineChart(dataArray){
         .domain(domain)
         // .domain([0,n-1])
         .range([0, width]);
+    var ydomain;
+    if(hasOver65){ydomain=150}else{ydomain=60}
 
     // 6. Y scale will use the randomly generate number 
     var yScale = d3.scaleLinear()
-        .domain([0, 60]) // input 
+        .domain([0,ydomain])
         .range([height, 0]) // output 
 
-        var line = d3.line()
+        line = d3.line()
         .x(function(d,i){return xScale(domain[d.i])+width/(2*n) ;})
         .y(function(d){return yScale(d.y);})
         // .curve(d3.curveCardinal.tension(0))
@@ -319,7 +328,7 @@ function createLineChart(dataArray){
         svg.append("g")
             .attr("class", "y axis")
             .call(d3.axisLeft(yScale)
-            .tickValues([1, 3, 5,10,15,20,30,40,50,60])
+            // .tickValues([1, 3, 5,10,15,20,30,40,50,60])
             // .ticks(50)
             .tickSize(1)
             ); // Create an axis component with d3.axisLeft
