@@ -142,6 +142,8 @@ d3.select('svg.break-down')
     .attr('d', pathData2)
     .attr("class","curve second")
 
+
+///function to create distribution box
 function createDistBox(data){
     $(".distBox").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
@@ -279,7 +281,7 @@ function createDistBox(data){
 }
 
 
-
+///function to create the line chart
 function createLineChart(dataArray){
     $(".lineChart").empty()
     var margin = {top: 25, right: 50, bottom: 25, left: 50};
@@ -314,6 +316,8 @@ function createLineChart(dataArray){
         .append("g")
         .attr("transform", "translate(" + margin.left + "," +margin.top+")");
 
+        ///append the legend
+        
         svg.append("g")
             .attr("class", "x axis")
             .attr("transform", "translate(0," + height + ")")
@@ -332,14 +336,52 @@ function createLineChart(dataArray){
             // .ticks(50)
             .tickSize(1)
             ); // Create an axis component with d3.axisLeft
+        
+        //append a group to be used later
+        svg.append("g")
+            .attr("id", "lineChart-legend")
 
-        for(var i=0; i<dataArray.length; i++){
-            chartLineGenerator(dataArray[i],"line"+(i+1))
-        }
         var div = d3.select("#lineChart-wrap").append("div")
             .attr("class", "tooltip")
             .style("display","none")
             .style("opacity", 0);
+
+        //run the line generator function for each array item passed into the main function
+        for(var i=0; i<dataArray.length; i++){
+            chartLineGenerator(dataArray[i],"line"+(i+1))
+            legendGenerator(i)
+        }
+        
+        function legendGenerator(index){
+            switch(index){
+                case 0:
+                    var legendText= "State NAS rate"
+                    break;
+                case 1:
+                    var legendText= "State overall rate"
+                    break;
+                case 2:
+                    var legendText= "ZIP-Code NAS rate"
+                    break;
+                case 3:
+                    var legendText= "ZIP-Code overall rate"
+                    break;
+            }
+            d3.select("#lineChart-legend")
+                .append("line")
+                .attr("class","chartLine line"+(index+1))
+                .attr("x1",width-130)
+                .attr("y1",12*index-4)
+                .attr("x2",width-100)
+                .attr("y2",12*index-4)
+
+            d3.select("#lineChart-legend")
+                .append("text")
+                .text(legendText)
+                .attr("x", width-90)
+                .attr("y", 12*index)
+                .attr("class", "legend-text")
+        }
 
         function chartLineGenerator(dataset,className){
             svg.append("path")

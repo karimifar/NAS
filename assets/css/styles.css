@@ -303,7 +303,9 @@ svg{
 }
 .line1 {
     stroke: #d4508790;
-    stroke-dasharray: 2
+    stroke-dasharray: 8 3;
+    /* stroke-width: 3; */
+    /* stroke-linecap: round; */
 }
 .line1-dot {
     fill: #d4508790;
@@ -311,7 +313,9 @@ svg{
 }
 .line2 {
     stroke: #003f5c90;
-    stroke-dasharray: 2
+    stroke-dasharray: 8 3;
+    /* stroke-width: 3; */
+    /* stroke-linecap: round; */
 }
 .line2-dot {
     fill: #003f5c90;
@@ -351,6 +355,10 @@ svg{
     text-align: center;
 }
 
+.legend-text{
+    font-size: 10px;
+    font-weight: 100;
+}
 .invisible{
     display: none;
 }
