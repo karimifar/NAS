@@ -135,8 +135,8 @@ var points = [
 ];
 var points2 = [
     [100, 0],
-    [100,190],
-	[150, 190],
+    [100,185],
+	[150, 185],
 ];
 
 var pathData1 = lineGenerator(points);
@@ -145,7 +145,7 @@ var pathData2 = lineGenerator(points2);
 d3.select('svg.break-down')
     .attr("viewBox", "0 0 150 195")
     .attr("width", 200)
-    .attr("height", 195)
+    .attr("height", 190)
     .select("path.first")
     .attr('d', pathData1)
     .attr("class","curve first")

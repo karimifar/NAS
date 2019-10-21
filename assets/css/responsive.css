@@ -30,4 +30,38 @@
         width:100%;
         height: unset;
     }
-  }
+    
+}
+
+
+@media only screen and (max-width: 600px) {
+    .desc-col{
+        width:100%;
+        height: unset;
+        padding: 50px 0;
+        padding-top: 120px;
+    }
+    .chart-col{
+        width:100%;
+        height: unset;
+    }
+    .break-down-row h3{
+        font-size: 26px;
+    }
+    .break-down-text-col{
+        font-size: 14px;
+    }
+    .break-down-graph{
+        display:none;
+    }
+    .desc-row1{
+        flex-direction: column;
+    }
+    .pnd-rate{
+        flex-direction: row;
+    }
+    .pnd-text{
+        width:100%;
+        text-align: center
+    }
+}
