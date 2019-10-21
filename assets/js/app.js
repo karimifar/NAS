@@ -55,7 +55,7 @@ function queryZip(zip){
     $.get(req_url, function(data){
         
         console.log(data)
-        if(data && data[14].pndexp_rate!=-1){
+        if(data.length!==0 && data[14].pndexp_rate!=-1){
             $(".pre-query").css("height","80px")
             $(".pre-query").addClass("started")
             $("#home-input").text(" ")
@@ -63,21 +63,6 @@ function queryZip(zip){
             // $(".test").addClass("invisible")
             setTimeout(function(){
                 afterDataTransition()
-                var nas_rate= data[14].nas_rate;
-                var pnd_rate= data[14].pndexp_rate
-                $("#main-rate").text(pnd_rate)
-                $(".zip-code").text(data[4].zip)
-                var rate_change = (pnd_rate - data[0].pndexp_rate).toFixed(1)
-                if(rate_change>0){
-                    $(".change-wording").text("increased by ")
-                    $(".rate-change").text(rate_change)
-                }else if(rate_change<0){
-                    $(".change-wording").text("decreased by ")
-                    $(".rate-change").text(-1*rate_change)
-                }else{
-                    $(".change-wording").text("not changed")
-                    $(".rate-change").text("")
-                }
 
                 var zip_nas_trend = []
                 var zip_pnd_trend = []
@@ -94,16 +79,42 @@ function queryZip(zip){
                     }
                     console.log(zip_pnd_trend)
                 }
+
+                var nas_rate= data[14].nas_rate;
+                var pnd_rate= data[14].pndexp_rate
+                $("#main-rate").text(pnd_rate)
+                $(".zip-code").text(data[4].zip)
+                var rate_change = (pnd_rate - zip_pnd_trend[0].y).toFixed(1)
+                if(rate_change>0){
+                    $(".change-wording").text("increased by ")
+                    $(".rate-change").text(rate_change)
+                }else if(rate_change<0){
+                    $(".change-wording").text("decreased by ")
+                    $(".rate-change").text(-1*rate_change)
+                }else{
+                    $(".change-wording").text("not changed")
+                    $(".rate-change").text("")
+                }
+                $("#change-period").text(15-zip_pnd_trend[0].i)
                 createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
                 createDistBox(pnd_rate);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
+                
+                if(pnd_rate==0){
+                    $(".desc-row2").css("display","none")
+                }else{
+                    $(".desc-row2").css("display","flex")
+                }
                 $("#opioid-p").text(opioid_p+"%")
                 $("#other-p").text(100-opioid_p+"%")
                 
 
             },400)
+        }else if(data.length==0){
+            alert("Please Enter a Valid Texas ZIP-Code")
         }else{
-            alert("no data for this zip")
+            //should get the county data
+            alert("No Data for This Zip")
         }
         
     })
@@ -124,19 +135,21 @@ var points = [
 ];
 var points2 = [
     [100, 0],
-    [100,180],
-	[150, 180],
+    [100,190],
+	[150, 190],
 ];
 
 var pathData1 = lineGenerator(points);
 var pathData2 = lineGenerator(points2);
 
 d3.select('svg.break-down')
-    .attr("width", 150)
-    .attr("height", 185)
+    .attr("viewBox", "0 0 150 195")
+    .attr("width", 200)
+    .attr("height", 195)
     .select("path.first")
     .attr('d', pathData1)
     .attr("class","curve first")
+
 
     d3.select('path.second')
     .attr('d', pathData2)

@@ -208,7 +208,7 @@ body{
     display: flex;
     width:100%
 }
-.nas-rate{
+.pnd-rate{
     /* width:30%; */
     text-align: center;
     padding: 20px;
@@ -230,7 +230,7 @@ body{
 .changeble{
     transition: all 0.6s cubic-bezier(1, 0, 0, 1);
 }
-.nas-text{
+.pnd-text{
     width:70%;
     background: #0683ae;
     padding: 20px;

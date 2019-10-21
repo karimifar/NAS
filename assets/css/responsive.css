@@ -1,0 +1,33 @@
+@media only screen and (max-width: 1200px) {
+    .desc-col{
+        width:55%;
+    }
+    .chart-col{
+        width:45%;
+    }
+   #main-rate{
+       font-size: 48px;
+   } 
+   .pnd-rate{
+       padding: 10px;
+   }
+   .pnd-text{
+       font-size: 16px;
+   }
+   .break-down-text-col{
+    font-size: 16px;
+    }
+}
+
+@media only screen and (max-width: 1024px) {
+    .desc-col{
+        width:100%;
+        height: unset;
+        padding: 50px 0;
+        padding-top: 120px;
+    }
+    .chart-col{
+        width:100%;
+        height: unset;
+    }
+  }
