@@ -208,7 +208,7 @@ function createDistBox(data){
             d3.axisBottom(xScale)
             .tickPadding(5)
             .tickSize(3)
-            .tickValues([0,8,12,34.5,69])
+            .tickValues([0,8,12,69])
             .tickFormat(d3.format(",.3"))
             ); // Create an axis component with d3.axisBottom
             

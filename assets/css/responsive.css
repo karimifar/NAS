@@ -46,16 +46,20 @@
         height: unset;
     }
     .break-down-row h3{
-        font-size: 26px;
+        font-size: 28px;
     }
     .break-down-text-col{
-        font-size: 14px;
+        margin-top: 0;
+        padding: 20px;
     }
     .break-down-graph{
         display:none;
     }
     .desc-row1{
         flex-direction: column;
+    }
+    .desc-row2{
+        margin:0;
     }
     .pnd-rate{
         flex-direction: row;
