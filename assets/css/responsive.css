@@ -1,5 +1,5 @@
-@media only screen and (max-width: 1200px) {
-    .desc-col{
+@media only screen and (max-width: 1400px) {
+    .desc-overflow{
         width:55%;
     }
     .chart-col{
@@ -20,7 +20,7 @@
 }
 
 @media only screen and (max-width: 1024px) {
-    .desc-col{
+    .desc-overflow{
         width:100%;
         height: unset;
         padding: 50px 0;
@@ -35,7 +35,7 @@
 
 
 @media only screen and (max-width: 600px) {
-    .desc-col{
+    .desc-overflow{
         width:100%;
         height: unset;
         padding: 50px 0;

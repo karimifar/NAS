@@ -3,8 +3,13 @@
 <head>
     <script src="https://kit.fontawesome.com/b5e77ab30a.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://use.typekit.net/ewr5ovq.css">
+    <!-- BOOTSTRAP CDN -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <!-- MAPBOX CDN -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v1.4.1/mapbox-gl.css' rel='stylesheet' />
+
     <link rel="stylesheet" href="./assets/css/styles.css">
     <link rel="stylesheet" href="./assets/css/responsive.css">
     <meta charset="UTF-8">
@@ -33,46 +38,71 @@
         </div>
         <div class="after-query">
             <div class="res-row">
+                <div class="desc-overflow">
+                    <div class="desc-col">
 
-                <div class="desc-col">
-
-                    <div class="desc-row1 desc-row">
-                        <div class="pnd-rate">
-                            <h2 id="main-rate"></h2>
+                        <div class="desc-row1 desc-row">
+                            <div class="pnd-rate">
+                                <h2 id="main-rate"></h2>
+                            </div>
+                            <div class="pnd-text">
+                                <p>out of 1000 babies born in <span class="changeble bold zip-code">-----</span> over the last three years were exposed to drugs in utero. This number has <span class="changeble change-wording">increased by </span><span class="changeble bold rate-change">--</span> in the last <span id="change-period">15</span> years.  </p>
+                            </div>
                         </div>
-                        <div class="pnd-text">
-                            <p>out of 1000 babies born in <span class="changeble bold zip-code">-----</span> over the last three years were exposed to drugs in utero. This number has <span class="changeble change-wording">increased by </span><span class="changeble bold rate-change">--</span> in the last <span id="change-period">15</span> years.  </p>
+            
+                        <div class="desc-row2 desc-row">
+                            <div class="break-down-graph">
+                                <svg class="break-down">
+                                    <path class="first">
+                                    </path>
+                                    <path class="second">
+                                    </path>
+                                </svg>
+                            </div>
+                            <div class="break-down-text-col">
+                                <div class="break-down-row break-down-row-1">
+                                <div><h3 class="changeble" id="opioid-p">-</h3></div>
+                                <div>
+                                    <p>were exposed to opioids.</p>
+                                </div>
+                                </div>
+                                <div class="break-down-row break-down-row-2"> 
+                                <div><h3 class="changeble" id="other-p">-</h3></div>
+                                <div>
+                                    <p>were exposed to cocaine, methamphetamines, marijuana, or benzodiazepines. </p>
+                                </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                        <div class="desc-row3">
+                            
+                            <div class="chart2 chart">
+                                <div class="chart-desc">
+                                    <h3>Drug exposure rate trends in <span class="the-result">this ZIP-code</span> compared to state rates from 2004–2018</h3>
+                                </div>
+                                <div id="lineChart-wrap">
+                                    <svg class="lineChart"></svg>
+                                </div>
+                            </div>
+                            <div class="chart1 chart">
+                                <div class="chart-desc">
+                                    <h3>See how <span class="the-result">this ZIP-code</span> compares to others in Texas</h3>
+                                </div>
+                                <div id="dist-box">
+                                    <svg class="distBox">
         
-                    <div class="desc-row2 desc-row">
-                        <div class="break-down-graph">
-                            <svg class="break-down">
-                                <path class="first">
-                                </path>
-                                <path class="second">
-                                </path>
-                            </svg>
+                                    </svg>
+                                </div>
+                                <div id="spacer"></div>
+                            </div>
+
                         </div>
-                        <div class="break-down-text-col">
-                            <div class="break-down-row break-down-row-1">
-                            <div><h3 class="changeble" id="opioid-p">-</h3></div>
-                            <div>
-                                <p>were exposed to opioids.</p>
-                            </div>
-                            </div>
-                            <div class="break-down-row break-down-row-2"> 
-                            <div><h3 class="changeble" id="other-p">-</h3></div>
-                            <div>
-                                <p>were exposed to cocaine, methamphetamines, marijuana, or benzodiazepines. </p>
-                            </div>
-                            </div>
-                        </div>
+                        
+                        
                     </div>
                 </div>
-
                 <div class="chart-col">
-                    <div class="chart-row1 chart-row">
+                    <!-- <div class="chart1 chart">
                         <div id="dist-box">
                             <div class="chart-desc">
                                 <h3>See how <span class="the-result">this Zip-Code</span> compares to others in Texas</h3>
@@ -82,15 +112,17 @@
                             </svg>
                         </div>
                     </div>
-                    <div class="chart-row2 chart-row">
+                    <div class="chart2 chart">
                         <div id="lineChart-wrap">
                             <div class="chart-desc">
                                 <h3>Drug exposure rate trends in <span class="the-result">this Zip-Code</span> compared to state rates from 2004–2018</h3>
                             </div>
                             <svg class="lineChart"></svg>
                         </div>
+                    </div> -->
+                    <div class="map-row">
+                        <div id="theMap"></div>
                     </div>
-                    
                 </div>
                
 

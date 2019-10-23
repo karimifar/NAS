@@ -1,5 +1,5 @@
 var req_zip;
-var api_URL= "https://intense-tor-20370.herokuapp.com/api/nas/nas_zip/"
+var api_URL= "https://intense-tor-20370.herokuapp.com" //"http://localhost:3306" //
 var first = true;
 var state_pnd_trend=[
     {"y": "4.8" ,"i":0},
@@ -35,20 +35,27 @@ var state_nas_trend=[
     {"y": "2.6", "i":13},
     {"y": "2.5", "i":14},
 ]
-
+var map;
 var hasOver65;
 
 $("#home-submit").on("click", function(event){
-    hasOver65= false;
     event.preventDefault();
+    hasOver65= false;
     req_zip = $("#home-input").val().trim();
-    console.log(req_zip)
-    queryZip(req_zip)
+    $(".after-query").css("display", "block")
+    if(first){
+        createMap();
+        map.resize();
+    }
+    first=false
+    queryZip(req_zip);
+    
+    
 })
 
 function queryZip(zip){
-    var req_url= api_URL + zip
-    console.log(api_URL)
+    var req_url= api_URL + "/api/nas/nas_zip/" + zip;
+    console.log(req_url)
     
     // $(".test").removeClass("invisible")
     startTransitionQuery()
@@ -59,7 +66,6 @@ function queryZip(zip){
             $(".pre-query").css("height","80px")
             $(".pre-query").addClass("started")
             $("#home-input").text(" ")
-            $(".after-query").css("display", "block")
             // $(".test").addClass("invisible")
             setTimeout(function(){
                 afterDataTransition()
@@ -441,3 +447,71 @@ function afterDataTransition(){
     $("#main-rate").css("width", "180px")
     $(".changeble").css("opacity", "1")
 }
+
+
+
+
+// MAP FUNCTIONS
+var COLORS = ['#bbb', 'rgba(0,41,65,1)', 'rgba(0,111,103,1)', 'rgba(0,179,149,1)', 'rgba(0,153,162,1)', 'rgba(0,92,160,1)', 'rgba(0,34,115,1)']
+var BREAKS = [0, 8, 16, 24, 32, 40]
+
+mapboxgl.accessToken = "pk.eyJ1Ijoia2FyaW1pZmFyIiwiYSI6ImNqOGtnaWp4OTBjemsyd211ZDV4bThkNmIifQ.Xg-Td2FFJso83Mmmc87NDA";
+var mapStyle = "mapbox://styles/karimifar/cjoox1jxa3wy42rkeftpo6c98";
+
+function createMap(){
+    map = new mapboxgl.Map({
+        container: 'theMap',
+        zoom: 4.5,
+        center: [-99.113241, 31.079125],
+        maxZoom: 11,
+        minZoom: 4,
+        style: mapStyle//'mapbox://styles/mapbox/streets-v11'
+    });
+    
+    map.on('load', function () {
+        
+        map.addSource("counties", {
+            type: "geojson",
+            data: api_URL+ "/NAS/counties"
+        })
+        
+        map.addLayer({
+            'id': 'county',
+            'type': 'fill',
+            'source':'counties',
+            'layout': {
+                'visibility':'visible'
+            },
+            'paint':{
+                'fill-color': [
+                    "interpolate",
+                    ["linear"],
+                    ["get", "pndexp_rat"],
+                    BREAKS[0], COLORS[0],
+                    BREAKS[1], COLORS[1],
+                    BREAKS[2], COLORS[2],
+                    BREAKS[3], COLORS[3],
+                    BREAKS[4], COLORS[4],
+                    
+                ],
+                'fill-opacity':0.75
+            }
+        });
+        
+        map.resize();
+    });
+    
+
+}
+
+
+// map.on("load", function(){
+//     map.addLayer({
+//         id: "counties",
+//         type: "fill",
+//         source:{
+//             type:"geojson",
+//             data: "../geojson/counties/geojson"
+//         },
+//     })
+// })
