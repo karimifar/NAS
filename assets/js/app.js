@@ -52,7 +52,6 @@ $("#home-submit").on("click", function(event){
     
     
 })
-
 function queryZip(zip){
     var req_url= api_URL + "/api/nas/nas_zip/" + zip;
     console.log(req_url)
@@ -72,6 +71,10 @@ function queryZip(zip){
 
                 var zip_nas_trend = []
                 var zip_pnd_trend = []
+                var rate2010 =data[6].pndexp_rate;
+                var rate2011 =data[7].pndexp_rate;
+                var rate2009 =data[5].pndexp_rate;
+
                 for (var i=0; i<data.length; i++){
                     if(data[i].nas_rate != -1){
                         zip_nas_trend.push({"y":data[i].nas_rate, "i": i})
@@ -85,23 +88,51 @@ function queryZip(zip){
                     }
                     console.log(zip_pnd_trend)
                 }
-
+                
                 var nas_rate= data[14].nas_rate;
-                var pnd_rate= data[14].pndexp_rate
+                var pnd_rate= data[14].pndexp_rate;
+                $("#percent-change-s").css("display", "inline")
+                $("#ifZero").css("display", "none")
+                if(rate2010 == -1){
+                    if(rate2011 == -1){
+                        if(rate2009 == -1){
+                            $("#percent-change-s").css("display", "none")
+                        }
+                    }else{
+                        $(".change-year").text("2011")
+                        if (rate2011 ==0){
+                            $("#percent-change-s").css("display", "none")
+                            $("#ifZero").css("display", "inline")
+                        }else{
+                            var rate_change = ((pnd_rate - rate2011)/rate2011)*100
+                        }
+                    }
+
+                }else{
+                    $(".change-year").text("2010")
+                    if(rate2010 == 0){
+                        $("#percent-change-s").css("display", "none")
+                        $("#ifZero").css("display", "inline")
+                    }else{
+                        var rate_change = ((pnd_rate - rate2010)/rate2010)*100
+                    }
+                }
                 $("#main-rate").text(pnd_rate)
-                $(".zip-code").text(data[4].zip)
-                var rate_change = (pnd_rate - zip_pnd_trend[0].y).toFixed(1)
+                $(".zip-code").text(data[14].zip)
+
+             
                 if(rate_change>0){
                     $(".change-wording").text("increased by ")
-                    $(".rate-change").text(rate_change)
+                    $(".rate-change").text(rate_change.toFixed(1)+"%")
                 }else if(rate_change<0){
                     $(".change-wording").text("decreased by ")
-                    $(".rate-change").text(-1*rate_change)
+                    $(".rate-change").text(-1*rate_change.toFixed(1)+"%")
                 }else{
+                    console.log(rate_change)
                     $(".change-wording").text("not changed")
                     $(".rate-change").text("")
                 }
-                $("#change-period").text(15-zip_pnd_trend[0].i)
+                
                 createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
                 createDistBox(pnd_rate);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
@@ -452,11 +483,14 @@ function afterDataTransition(){
 
 
 // MAP FUNCTIONS
-var COLORS = ['#bbb', 'rgba(0,41,65,1)', 'rgba(0,111,103,1)', 'rgba(0,179,149,1)', 'rgba(0,153,162,1)', 'rgba(0,92,160,1)', 'rgba(0,34,115,1)']
-var BREAKS = [0, 8, 16, 24, 32, 40]
+var firstSymbolId;
+
+var COLORS = ['#bbb','rgba(75,187,231,1)', 'rgba(42,131,182,1)', 'rgba(55,121,144,1)', 'rgba(50,90,120,1)', 'rgba(25,73,96,1)', 'rgba(37,24,68,1)']
+var BREAKS = [1.1, 10, 15, 20, 25, 30]
 
 mapboxgl.accessToken = "pk.eyJ1Ijoia2FyaW1pZmFyIiwiYSI6ImNqOGtnaWp4OTBjemsyd211ZDV4bThkNmIifQ.Xg-Td2FFJso83Mmmc87NDA";
 var mapStyle = "mapbox://styles/karimifar/cjoox1jxa3wy42rkeftpo6c98";
+var mapStyle2 = "mapbox://styles/karimifar/ck2548zbg0vfi1cryse3vrvwf";
 
 function createMap(){
     map = new mapboxgl.Map({
@@ -465,10 +499,20 @@ function createMap(){
         center: [-99.113241, 31.079125],
         maxZoom: 11,
         minZoom: 4,
-        style: mapStyle//'mapbox://styles/mapbox/streets-v11'
+        style: mapStyle2//'mapbox://styles/mapbox/streets-v11'
     });
+
+// Find the index of the first symbol layer in the map style
     
+
     map.on('load', function () {
+        var layers = map.getStyle().layers;
+        for (var i = 0; i < layers.length; i++) {
+            if (layers[i].type === 'symbol') {
+                firstSymbolId = layers[i].id;
+                break;
+            }
+        }
         
         map.addSource("counties", {
             type: "geojson",
@@ -484,19 +528,21 @@ function createMap(){
             },
             'paint':{
                 'fill-color': [
-                    "interpolate",
-                    ["linear"],
+                    "step",
+                    // ["linear"],
                     ["get", "pndexp_rat"],
-                    BREAKS[0], COLORS[0],
-                    BREAKS[1], COLORS[1],
-                    BREAKS[2], COLORS[2],
-                    BREAKS[3], COLORS[3],
-                    BREAKS[4], COLORS[4],
+                    COLORS[0],BREAKS[0],
+                    COLORS[1],BREAKS[1], 
+                    COLORS[2],BREAKS[2], 
+                    COLORS[3],BREAKS[3], 
+                    COLORS[4],BREAKS[4],
+                    COLORS[5], BREAKS[5],
+                    COLORS[6],
                     
                 ],
                 'fill-opacity':0.75
             }
-        });
+        }, firstSymbolId);
         
         map.resize();
     });
