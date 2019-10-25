@@ -485,8 +485,8 @@ function afterDataTransition(){
 // MAP FUNCTIONS
 var firstSymbolId;
 
-var COLORS = ['#bbb','rgba(75,187,231,1)', 'rgba(42,131,182,1)', 'rgba(55,121,144,1)', 'rgba(50,90,120,1)', 'rgba(25,73,96,1)', 'rgba(37,24,68,1)']
-var BREAKS = [1.1, 10, 15, 20, 25, 30]
+var COLORS = ['rgba(75,187,231,1)', 'rgba(42,131,182,1)', 'rgba(55,121,144,1)', 'rgba(50,90,120,1)', 'rgba(25,73,96,1)', 'rgba(37,24,68,1)','#fff']
+var BREAKS = [0, 10, 15, 20, 25, 30, 999]
 
 mapboxgl.accessToken = "pk.eyJ1Ijoia2FyaW1pZmFyIiwiYSI6ImNqOGtnaWp4OTBjemsyd211ZDV4bThkNmIifQ.Xg-Td2FFJso83Mmmc87NDA";
 var mapStyle = "mapbox://styles/karimifar/cjoox1jxa3wy42rkeftpo6c98";
@@ -516,7 +516,7 @@ function createMap(){
         
         map.addSource("counties", {
             type: "geojson",
-            data: api_URL+ "/NAS/counties"
+            data: api_URL+ "/NAS/zips"
         })
         
         map.addLayer({
@@ -530,7 +530,7 @@ function createMap(){
                 'fill-color': [
                     "step",
                     // ["linear"],
-                    ["get", "pndexp_rat"],
+                    ["get", "pndexp_rate"],
                     COLORS[0],BREAKS[0],
                     COLORS[1],BREAKS[1], 
                     COLORS[2],BREAKS[2], 

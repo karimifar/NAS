@@ -344,38 +344,38 @@ svg{
     stroke-width: 5;
     opacity: 0.85;
 }
+.line3 {
+    stroke: #d45087ee;
+    stroke-dasharray: 8 3;
+    /* stroke-width: 3; */
+    /* stroke-linecap: round; */
+}
+.line3-dot {
+    fill: #d45087ee;
+    stroke: #fff;
+}
 .line1 {
-    stroke: #d4508790;
+    stroke: #003f5cee;
     stroke-dasharray: 8 3;
     /* stroke-width: 3; */
     /* stroke-linecap: round; */
 }
 .line1-dot {
-    fill: #d4508790;
+    fill: #003f5cee;
     stroke: #fff;
 }
-.line2 {
-    stroke: #003f5c90;
-    stroke-dasharray: 8 3;
-    /* stroke-width: 3; */
-    /* stroke-linecap: round; */
-}
-.line2-dot {
-    fill: #003f5c90;
-    stroke: #fff;
-}
-.line3 {
+.line4 {
     stroke: #d45087;
 }
-.line3-dot {
+.line4-dot {
     fill: #d45087;
     stroke: #fff;
 }
 
-.line4 {
+.line2 {
     stroke: #003f5c;
 }
-.line4-dot {
+.line2-dot {
     fill: #003f5c;
     stroke: #fff;
 }
