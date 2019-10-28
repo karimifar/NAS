@@ -37,6 +37,7 @@ var state_nas_trend=[
 ]
 var map;
 var hasOver65;
+var pin;
 
 $("#home-submit").on("click", function(event){
     event.preventDefault();
@@ -60,8 +61,25 @@ function queryZip(zip){
     startTransitionQuery()
     $.get(req_url, function(data){
         
+
         console.log(data)
         if(data.length!==0 && data[14].pndexp_rate!=-1){
+            $(".chart1").css("display", "flex")
+
+            var z_lat = data[0].zip_county.z_lat
+            var z_lng = data[0].zip_county.z_lng
+            console.log(z_lat, z_lng)
+            map.flyTo({
+                center:[z_lng,z_lat],
+                zoom: 10
+            })
+            if(pin){
+                pin.remove();
+            }
+            pin = new mapboxgl.Marker()
+                .setLngLat([z_lng, z_lat])
+                .addTo(map);
+
             $(".pre-query").css("height","80px")
             $(".pre-query").addClass("started")
             $("#home-input").text(" ")
@@ -97,6 +115,14 @@ function queryZip(zip){
                     if(rate2011 == -1){
                         if(rate2009 == -1){
                             $("#percent-change-s").css("display", "none")
+                        }else{
+                            $(".change-year").text("2009")
+                            if (rate2009 ==0){
+                                $("#percent-change-s").css("display", "none")
+                                $("#ifZero").css("display", "inline")
+                            }else{
+                                var rate_change = ((pnd_rate - rate2009)/rate2009)*100
+                            }
                         }
                     }else{
                         $(".change-year").text("2011")
@@ -118,7 +144,8 @@ function queryZip(zip){
                     }
                 }
                 $("#main-rate").text(pnd_rate)
-                $(".zip-code").text(data[14].zip)
+                var result = data[0].zip
+                $(".the-result").text(data[14].zip)
 
              
                 if(rate_change>0){
@@ -133,8 +160,8 @@ function queryZip(zip){
                     $(".rate-change").text("")
                 }
                 
-                createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend]);
-                createDistBox(pnd_rate);
+                createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend],result);
+                createDistBox(pnd_rate, result);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
                 
                 if(pnd_rate==0){
@@ -150,8 +177,9 @@ function queryZip(zip){
         }else if(data.length==0){
             alert("Please Enter a Valid Texas ZIP-Code")
         }else{
-            //should get the county data
-            alert("No Data for This Zip")
+            var cntyName = data[0].zip_county.county
+            queryCounty(cntyName)
+            // alert("No Data for This Zip")
         }
         
     })
@@ -194,7 +222,7 @@ d3.select('svg.break-down')
 
 
 ///function to create distribution box
-function createDistBox(data){
+function createDistBox(data,result){
     $(".distBox").empty()
     var margin = {top: 50, right: 50, bottom: 50, left: 50};
     var width = 500;
@@ -301,7 +329,7 @@ function createDistBox(data){
 
     svg.select("#thezip").append("text")
         .attr("class","thezip-text dist-text")
-        .text("Where this zip code stands")
+        .text("Where " + result + " stands")
         .attr("x", function(){
             var textWidth = this.getBBox().width
             return xScale(data) - textWidth/2
@@ -332,7 +360,7 @@ function createDistBox(data){
 
 
 ///function to create the line chart
-function createLineChart(dataArray){
+function createLineChart(dataArray, result){
     $(".lineChart").empty()
     var margin = {top: 25, right: 50, bottom: 25, left: 50};
     var width = 500;
@@ -399,10 +427,10 @@ function createLineChart(dataArray){
         //run the line generator function for each array item passed into the main function
         for(var i=0; i<dataArray.length; i++){
             chartLineGenerator(dataArray[i],"line"+(i+1))
-            legendGenerator(i)
+            legendGenerator(i, result)
         }
         
-        function legendGenerator(index){
+        function legendGenerator(index, result){
             switch(index){
                 case 0:
                     var legendText= "State NAS rate"
@@ -411,10 +439,10 @@ function createLineChart(dataArray){
                     var legendText= "State overall rate"
                     break;
                 case 2:
-                    var legendText= "ZIP-Code NAS rate"
+                    var legendText= result + " NAS rate"
                     break;
                 case 3:
-                    var legendText= "ZIP-Code overall rate"
+                    var legendText= result + " overall rate"
                     break;
             }
             d3.select("#lineChart-legend")
@@ -488,7 +516,7 @@ var hoveredCtId = null;
 var hoveredZipId = null;
 var zoomThreshold = 5.9;
 var COLORS = ['rgba(75,187,231,1)', 'rgba(42,131,182,1)', 'rgba(55,121,144,1)', 'rgba(50,90,120,1)', 'rgba(25,73,96,1)', 'rgba(37,24,68,1)','#ddd']
-var BREAKS = [0, 10, 15, 20, 25, 30, 999]
+var BREAKS = [0, 10, 15, 20, 25, 998, 999]
 
 mapboxgl.accessToken = "pk.eyJ1Ijoia2FyaW1pZmFyIiwiYSI6ImNqOGtnaWp4OTBjemsyd211ZDV4bThkNmIifQ.Xg-Td2FFJso83Mmmc87NDA";
 var mapStyle = "mapbox://styles/karimifar/cjoox1jxa3wy42rkeftpo6c98";
@@ -649,6 +677,7 @@ function createMap(){
                         map.setFeatureState({source: 'zips_source', id: hoveredZipId}, { hover: false});
                     }
                     hoveredZipId = e.features[0].id;
+                    console.log(e.features[0].properties)
                     map.setFeatureState({source: 'zips_source', id: hoveredZipId}, { hover: true});
                 }
             });
@@ -661,6 +690,19 @@ function createMap(){
             hoveredZipId =  null;
         });
 
+        map.on("click", "zips_fill", function(e){
+            console.log("clicked")
+            console.log(e)
+            var zip=e.features[0].properties.zip;
+            queryZip(zip)
+        })
+
+        map.on("click", "counties_fill", function(e){
+            console.log("clicked")
+            console.log(e)
+            var county=e.features[0].properties.countyName;
+            queryCounty(county)
+        })
 
 
     });
@@ -669,13 +711,136 @@ function createMap(){
 }
 
 
-// map.on("load", function(){
-//     map.addLayer({
-//         id: "counties",
-//         type: "fill",
-//         source:{
-//             type:"geojson",
-//             data: "../geojson/counties/geojson"
-//         },
-//     })
-// })
+
+
+function queryCounty(county){
+    var req_url= api_URL + "/api/nas/nas_county/" + county;
+    console.log(req_url)
+    
+    // $(".test").removeClass("invisible")
+    startTransitionQuery()
+    $.get(req_url, function(data){
+        console.log(data)
+        var c_lat = data[0].cnty_centroid.c_lat
+        var c_lng = data[0].cnty_centroid.c_lng
+        console.log(c_lat, c_lng)
+        map.flyTo({
+            center:[c_lng,c_lat],
+            zoom: 5.8
+        })
+        if(pin){
+            pin.remove();
+        }
+        pin = new mapboxgl.Marker()
+            .setLngLat([c_lng, c_lat])
+            .addTo(map);
+
+        
+        if(data.length!==0 && data[14].pndexp_rate!=-1){
+            $(".chart1").css("display", "none")
+            $(".pre-query").css("height","80px")
+            $(".pre-query").addClass("started")
+            $("#home-input").text(" ")
+            // $(".test").addClass("invisible")
+            setTimeout(function(){
+                afterDataTransition()
+
+                var cnt_nas_trend = []
+                var cnt_pnd_trend = []
+                var rate2010 =data[6].pndexp_rate;
+                var rate2011 =data[7].pndexp_rate;
+                var rate2009 =data[5].pndexp_rate;
+                console.log(rate2009, rate2010, rate2010)
+                for (var i=0; i<data.length; i++){
+                    if(data[i].nas_rate != -1){
+                        cnt_nas_trend.push({"y":data[i].nas_rate, "i": i})
+                    }
+                    if(data[i].pndexp_rate != -1){
+                        cnt_pnd_trend.push({"y":data[i].pndexp_rate, "i":i}) 
+                    }
+
+                    if(data[i].pndexp_rate > 65){
+                        hasOver65=true;
+                    }
+                    console.log(cnt_pnd_trend)
+                }
+                
+                var nas_rate= data[14].nas_rate;
+                var pnd_rate= data[14].pndexp_rate;
+                $("#percent-change-s").css("display", "inline")
+                $("#ifZero").css("display", "none")
+                if(rate2010 == -1){
+                    if(rate2011 == -1){
+                        if(rate2009 == -1){
+                            $("#percent-change-s").css("display", "none")
+                        }else{
+                            console.log("hit here")
+
+                            $(".change-year").text("2009")
+                            if (rate2009 ==0){
+                                $("#percent-change-s").css("display", "none")
+                                $("#ifZero").css("display", "inline")
+                            }else{
+                                var rate_change = ((pnd_rate - rate2009)/rate2009)*100
+                            }
+                        }
+                    }else{
+                        $(".change-year").text("2011")
+                        if (rate2011 ==0){
+                            $("#percent-change-s").css("display", "none")
+                            $("#ifZero").css("display", "inline")
+                        }else{
+                            var rate_change = ((pnd_rate - rate2011)/rate2011)*100
+                        }
+                    }
+
+                }else{
+                    $(".change-year").text("2010")
+                    if(rate2010 == 0){
+                        $("#percent-change-s").css("display", "none")
+                        $("#ifZero").css("display", "inline")
+                    }else{
+                        var rate_change = ((pnd_rate - rate2010)/rate2010)*100
+                    }
+                }
+                $("#main-rate").text(pnd_rate)
+                var result = data[0].countyName + " County"
+                $(".the-result").text(result)
+
+             
+                if(rate_change>0){
+                    $(".change-wording").text("increased by ")
+                    $(".rate-change").text(rate_change.toFixed(1)+"%")
+                }else if(rate_change<0){
+                    $(".change-wording").text("decreased by ")
+                    $(".rate-change").text(-1*rate_change.toFixed(1)+"%")
+                }else{
+                    console.log(rate_change)
+                    $(".change-wording").text("not changed")
+                    $(".rate-change").text("")
+                }
+                
+                createLineChart([state_nas_trend,state_pnd_trend,cnt_nas_trend, cnt_pnd_trend],result);
+                var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
+                
+                if(pnd_rate==0){
+                    $(".desc-row2").css("display","none")
+                }else{
+                    $(".desc-row2").css("display","flex")
+                }
+                $("#opioid-p").text(opioid_p+"%")
+                $("#other-p").text(100-opioid_p+"%")
+                
+
+            },400)
+        }else if(data.length==0){
+            alert("Please Enter a Valid Texas County Name")
+        }else{
+            //there's no county-level data
+            alert("Message for when there is no county-level data")
+        }
+        
+    })
+
+    
+}
