@@ -484,7 +484,9 @@ function afterDataTransition(){
 
 // MAP FUNCTIONS
 var firstSymbolId;
-
+var hoveredCtId = null;
+var hoveredZipId = null;
+var zoomThreshold = 5.9;
 var COLORS = ['rgba(75,187,231,1)', 'rgba(42,131,182,1)', 'rgba(55,121,144,1)', 'rgba(50,90,120,1)', 'rgba(25,73,96,1)', 'rgba(37,24,68,1)','#ddd']
 var BREAKS = [0, 10, 15, 20, 25, 30, 999]
 
@@ -514,18 +516,72 @@ function createMap(){
             }
         }
         
-        map.addSource("counties", {
-            type: "geojson",
-            data: api_URL+ "/NAS/zips"
-        })
         
+        map.addSource("zips_source", {
+            type: "geojson",
+            data: api_URL+ "/NAS/zips",
+            generateId: true,
+        })
+
         map.addLayer({
-            'id': 'county',
+            'id': 'zips_fill',
             'type': 'fill',
-            'source':'counties',
+            'source':'zips_source',
             'layout': {
                 'visibility':'visible'
             },
+            'minzoom': zoomThreshold,
+            'paint':{
+                'fill-color': [
+                    "step",
+                    ["get", "pndexp_rate"],
+                    COLORS[0],BREAKS[0],
+                    COLORS[1],BREAKS[1], 
+                    COLORS[2],BREAKS[2], 
+                    COLORS[3],BREAKS[3], 
+                    COLORS[4],BREAKS[4],
+                    COLORS[5], BREAKS[5],
+                    COLORS[6],
+                    
+                ],
+                // 'fill-opacity':0.75
+            }
+        }, firstSymbolId);
+
+        map.addLayer({
+            'id': 'zips_outline',
+            'type': 'line',
+            'source':'zips_source',
+            'minzoom': zoomThreshold,
+            'paint':{
+                "line-color": ["case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    "#111",
+                    "#999"
+                ],
+                "line-width": ["case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    1,
+                    0.1
+                ],
+            }
+        }, firstSymbolId);
+
+
+        map.addSource("counties_source", {
+            type: "geojson",
+            data: api_URL+ "/NAS/counties",
+            generateId: true,
+        })
+        map.addLayer({
+            'id': 'counties_fill',
+            'type': 'fill',
+            "interactive": true,
+            'source':'counties_source',
+            'layout': {
+                'visibility':'visible'
+            },
+            'maxzoom': zoomThreshold,
             'paint':{
                 'fill-color': [
                     "step",
@@ -538,13 +594,75 @@ function createMap(){
                     COLORS[4],BREAKS[4],
                     COLORS[5], BREAKS[5],
                     COLORS[6],
-                    
                 ],
-                'fill-opacity':0.75
+            }
+        }, firstSymbolId);
+
+        map.addLayer({
+            'id': 'counties_outline',
+            'type': 'line',
+            'source':'counties_source',
+            'maxzoom': zoomThreshold,
+            'paint':{
+                "line-color": ["case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    "#111",
+                    "#999"
+                ],
+                "line-width": ["case",
+                    ["boolean", ["feature-state", "hover"], false],
+                    1,
+                    0.1
+                ],
             }
         }, firstSymbolId);
         
         map.resize();
+
+        map.on("mousemove", "counties_fill", function(e) {
+            map.getCanvas().style.cursor = "pointer"
+
+                if (e.features.length > 0) {
+                    if (hoveredCtId) {
+                        map.setFeatureState({source: 'counties_source', id: hoveredCtId}, { hover: false});
+                    }
+                    hoveredCtId = e.features[0].id;
+                    map.setFeatureState({source: 'counties_source', id: hoveredCtId}, { hover: true});
+                }
+            });
+             
+        map.on("mouseleave", "counties_fill", function() {
+            if (hoveredCtId) {
+                map.setFeatureState({source: 'counties_source', id: hoveredCtId}, { hover: false});
+                map.getCanvas().style.cursor = "pointer"
+            }
+            hoveredCtId =  null;
+        });
+
+
+
+        map.on("mousemove", "zips_fill", function(e) {
+            map.getCanvas().style.cursor = "pointer"
+
+                if (e.features.length > 0) {
+                    if (hoveredZipId) {
+                        map.setFeatureState({source: 'zips_source', id: hoveredZipId}, { hover: false});
+                    }
+                    hoveredZipId = e.features[0].id;
+                    map.setFeatureState({source: 'zips_source', id: hoveredZipId}, { hover: true});
+                }
+            });
+             
+        map.on("mouseleave", "zips_fill", function() {
+            if (hoveredZipId) {
+                map.setFeatureState({source: 'counties_source', id: hoveredZipId}, { hover: false});
+                map.getCanvas().style.cursor = "pointer"
+            }
+            hoveredZipId =  null;
+        });
+
+
+
     });
     
 
