@@ -117,7 +117,7 @@ function queryZip(zip){
                         if(rate2009 == -1){
                             $("#percent-change-s").css("display", "none")
                         }else{
-                            $("#change-year").text("2009")
+                            $(".change-year").text("2009")
                             if (rate2009 ==0){
                                 $("#percent-change-s").css("display", "none")
                                 $("#ifZero").css("display", "inline")
@@ -126,7 +126,7 @@ function queryZip(zip){
                             }
                         }
                     }else{
-                        $("#change-year").text("2011")
+                        $(".change-year").text("2011")
                         if (rate2011 ==0){
                             $("#percent-change-s").css("display", "none")
                             $("#ifZero").css("display", "inline")
@@ -136,7 +136,7 @@ function queryZip(zip){
                     }
 
                 }else{
-                    $("#change-year").text("2010")
+                    $(".change-year").text("2010")
                     if(rate2010 == 0){
                         $("#percent-change-s").css("display", "none")
                         $("#ifZero").css("display", "inline")
@@ -210,13 +210,13 @@ var lineGenerator = d3.line()
 
 var points = [
     [100, 0],
-    [100,90],
-	[150, 90],
+    [100,70],
+	[150, 70],
 ];
 var points2 = [
     [100, 0],
-    [100,185],
-	[150, 185],
+    [100,140],
+	[150, 140],
 ];
 
 var pathData1 = lineGenerator(points);
@@ -816,7 +816,7 @@ function queryCounty(county){
                         }else{
                             console.log("hit here")
 
-                            $("#change-year").text("2009")
+                            $(".change-year").text("2009")
                             if (rate2009 ==0){
                                 $("#percent-change-s").css("display", "none")
                                 $("#ifZero").css("display", "inline")
@@ -825,7 +825,7 @@ function queryCounty(county){
                             }
                         }
                     }else{
-                        $("#change-year").text("2011")
+                        $(".change-year").text("2011")
                         if (rate2011 ==0){
                             $("#percent-change-s").css("display", "none")
                             $("#ifZero").css("display", "inline")
@@ -835,7 +835,7 @@ function queryCounty(county){
                     }
 
                 }else{
-                    $("#change-year").text("2010")
+                    $(".change-year").text("2010")
                     if(rate2010 == 0){
                         $("#percent-change-s").css("display", "none")
                         $("#ifZero").css("display", "inline")

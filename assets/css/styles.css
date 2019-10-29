@@ -10,7 +10,7 @@ p,h2{
     /* padding: 10%; */
 }
 .pre-query h1{
-    font-family: freight-display-pro, serif;
+    font-family: "freight-display-pro", serif;
     font-size: 30px;
     font-weight: 800;
     color: #fff;
@@ -95,6 +95,10 @@ body{
     padding: 5px 0;
     align-items: unset;
     position: absolute;
+    flex-direction: row;
+    justify-content: flex-end;
+    z-index: 1000;
+    width: 100%;
 }
 .pre-query.started h1{
     display: none;
@@ -103,11 +107,14 @@ body{
     visibility: hidden;
 }
 .pre-query.started form{
-    width:250px;
+    width:fit-content;
     margin:0;
-    margin-top:-10px;
+    /* margin-top:-10px; */
     padding:10px;
+    padding-right: 20px;
     text-align: left;
+    display: flex;
+    justify-content: flex-end;
 }
 .pre-query.started #home-input{
     width: 60px;
@@ -116,9 +123,18 @@ body{
     padding: 10px 20px;
     font-size: 30px;
     text-align: left;
-    background: #0683ae;
+    background: #fff;
     color: #ffffff00;
     transition: all 0.2s ease-in-out;
+    margin-right: -52px;
+    box-shadow: #eee 0 0 10px;
+    border: 1px solid #aaa;
+    /* border-style: inset; */
+}
+
+.pre-query.started #home-input:focus{
+    border: 1px solid #f15a29;
+    border-style: inset;
 }
 
 .pre-query.started form:hover #home-input{
@@ -135,12 +151,12 @@ body{
     color:#f15a29;
 }
 .pre-query.started #home-submit{
-    margin-left: -55px;
+    margin-left: 0;
     background:none;
-    color:#fff;
+    color:#f15a29;
     border: none;
     font-size: 20px;
-    margin-bottom: 18px;
+    margin-top: 4px;
     /* opacity: 0; */
     /* pointer-events:none; */
 
@@ -205,7 +221,7 @@ body{
     max-width:1200px; */
     /* padding-top: 120px; */
     width:100%;
-    background: #003f5c;
+    background: linear-gradient(0deg, rgba(0,63,92,1) 85%, rgba(0,97,92,1) 100%);;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -225,12 +241,31 @@ body{
     margin-left:auto;
     margin-right:auto;
 }
+.desc-col h1{
+    color: white;
+    font-family: 'freight-display-pro', serif;
+    font-variant-numeric: lining-nums;
+    padding-top: 20px;
+    padding-bottom: 0;
+    text-align: center;
+    font-weight: 100;
+    line-height: 1.1em;
+    font-size: 24px;
+    border-bottom: 1px solid #fff;
+    width: fit-content;
+    margin: 0 auto;
+    /* background: #111; */
+    /* text-transform: uppercase */
+}
+.desc-col h1 span{
+    font-family: 'freight-display-pro', serif;
+    font-style: italic;
+    font-weight: 800;
+}
 .desc-row1{
     display: flex;
-    /* margin: auto; */
-    /* margin-top:50px; */
     width:100%;
-    margin-top: 100px;
+    margin-top: 40px;
     
 }
 .desc-row2{
@@ -270,24 +305,24 @@ body{
     transition: all 0.6s cubic-bezier(1, 0, 0, 1);
 }
 .underrate #main-rate{
-    color: green;
+    color: rgba(0,97,92,1);
 }
 .overrate #main-rate{
-    color: #f15a29;
+    color: #7c0f00;
 }
 .standard #main-rate{
-    color: #003f5c;
+    color: #333;
 }
 
-/* .underrate .desc-col{
-    background: linear-gradient(0deg, rgba(0,63,92,1) 30%, rgba(0,97,42,1) 100%);
+.underrate .desc-col{
+    background: linear-gradient(0deg, rgba(0,63,92,1) 90%, rgba(0,97,92,1) 100%);
 }
 .overrate .desc-col{
-    background: linear-gradient(0deg,  rgba(0,63,92,1) 30%, rgba(241,90,41,1) 100%);
+    background: linear-gradient(0deg, rgba(0,63,92,1) 90%, rgba(124,15,0,1) 100%);
 }
 .standard .desc-col{
-    background: linear-gradient(0deg,  rgba(0,63,92,1) 30%, rgba(6,131,174,1) 100%);
-} */
+    background: rgba(0,63,92,1)
+}
 
 .changeble{
     transition: all 0.6s cubic-bezier(1, 0, 0, 1);
@@ -314,14 +349,15 @@ body{
 .curve{
     fill: none;
     stroke: #0683ae;
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
 
 
 .break-down-text-col{
-    margin-top: 70px;
+    margin-top: 50px;
     font-size: 20px;
     color:#fff;
+    line-height: 1.15em;
 }
 .break-down-row{
     display: flex;
@@ -329,7 +365,7 @@ body{
     font-weight: 100;
 }
 .break-down-row-1{
-    margin-bottom: 38px;
+    margin-bottom: 10px;
 }
 .break-down-row h3{
     font-weight: 900;
