@@ -524,13 +524,25 @@ svg{
 .map-row{
     margin-top: auto;
     flex-grow: 1;
+    position: relative;
 }
 #theMap{
     width:100%;
     height: 100%;
+    z-index: 1;
     /* max-height: 100%; */
 }
-#theMap canvas{
-    width: 100% !important;
-    height: auto !important;
+
+#popupBox{
+    position: absolute;
+    background: #fff;
+    padding: 5px;
+    z-index: 1000;
+    top: 40px;
+    left:40px;
+    display: none;
+    pointer-events: none;
+}
+.mapboxgl-marker{
+    pointer-events: none;
 }
