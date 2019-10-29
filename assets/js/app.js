@@ -1,6 +1,7 @@
 var req_zip;
 var api_URL= "https://intense-tor-20370.herokuapp.com" //"http://localhost:3306" //
 var first = true;
+var rateState;
 var state_pnd_trend=[
     {"y": "4.8" ,"i":0},
     {"y": "5.4", "i":1},
@@ -108,7 +109,7 @@ function queryZip(zip){
                 }
                 
                 var nas_rate= data[14].nas_rate;
-                var pnd_rate= data[14].pndexp_rate;
+                var pnd_rate= parseFloat(data[14].pndexp_rate);
                 $("#percent-change-s").css("display", "inline")
                 $("#ifZero").css("display", "none")
                 if(rate2010 == -1){
@@ -143,6 +144,20 @@ function queryZip(zip){
                         var rate_change = ((pnd_rate - rate2010)/rate2010)*100
                     }
                 }
+                
+                if(pnd_rate<8){
+                    rateState=  "underrate";
+                }else     
+                if(pnd_rate>12){
+                    rateState = "overrate";
+                    console.log(pnd_rate)
+                }else   
+                if(8<pnd_rate<12){
+                    rateState = "standard";
+                }
+                                   
+                $("#res-row").attr("class", rateState)
+
                 $("#main-rate").text(pnd_rate)
                 var result = data[0].zip
                 $(".the-result").text(data[14].zip)
@@ -766,7 +781,7 @@ function queryCounty(county){
                 }
                 
                 var nas_rate= data[14].nas_rate;
-                var pnd_rate= data[14].pndexp_rate;
+                var pnd_rate= parseFloat(data[14].pndexp_rate);
                 $("#percent-change-s").css("display", "inline")
                 $("#ifZero").css("display", "none")
                 if(rate2010 == -1){
@@ -803,6 +818,14 @@ function queryCounty(county){
                         var rate_change = ((pnd_rate - rate2010)/rate2010)*100
                     }
                 }
+                if(pnd_rate<8){
+                    rateState=  "underrate";
+                }else if(pnd_rate>12){
+                    rateState = "overrate";
+                }else if(8<pnd_rate<12){
+                    rateState = "standard";
+                }
+                $("#res-row").attr("class", rateState)
                 $("#main-rate").text(pnd_rate)
                 var result = data[0].countyName + " County"
                 $(".the-result").text(result)
