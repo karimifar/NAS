@@ -116,7 +116,7 @@ function queryZip(zip){
                         if(rate2009 == -1){
                             $("#percent-change-s").css("display", "none")
                         }else{
-                            $(".change-year").text("2009")
+                            $("#change-year").text("2009")
                             if (rate2009 ==0){
                                 $("#percent-change-s").css("display", "none")
                                 $("#ifZero").css("display", "inline")
@@ -125,7 +125,7 @@ function queryZip(zip){
                             }
                         }
                     }else{
-                        $(".change-year").text("2011")
+                        $("#change-year").text("2011")
                         if (rate2011 ==0){
                             $("#percent-change-s").css("display", "none")
                             $("#ifZero").css("display", "inline")
@@ -135,7 +135,7 @@ function queryZip(zip){
                     }
 
                 }else{
-                    $(".change-year").text("2010")
+                    $("#change-year").text("2010")
                     if(rate2010 == 0){
                         $("#percent-change-s").css("display", "none")
                         $("#ifZero").css("display", "inline")
@@ -776,7 +776,7 @@ function queryCounty(county){
                         }else{
                             console.log("hit here")
 
-                            $(".change-year").text("2009")
+                            $("#change-year").text("2009")
                             if (rate2009 ==0){
                                 $("#percent-change-s").css("display", "none")
                                 $("#ifZero").css("display", "inline")
@@ -785,7 +785,7 @@ function queryCounty(county){
                             }
                         }
                     }else{
-                        $(".change-year").text("2011")
+                        $("#change-year").text("2011")
                         if (rate2011 ==0){
                             $("#percent-change-s").css("display", "none")
                             $("#ifZero").css("display", "inline")
@@ -795,7 +795,7 @@ function queryCounty(county){
                     }
 
                 }else{
-                    $(".change-year").text("2010")
+                    $("#change-year").text("2010")
                     if(rate2010 == 0){
                         $("#percent-change-s").css("display", "none")
                         $("#ifZero").css("display", "inline")
