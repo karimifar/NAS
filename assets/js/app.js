@@ -175,7 +175,7 @@ function queryZip(zip){
                     $(".rate-change").text("")
                 }
                 
-                createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend],result);
+                createLineChart([state_pnd_trend,state_nas_trend,zip_nas_trend, zip_pnd_trend],result);
                 createDistBox(pnd_rate, result);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
                 
@@ -243,7 +243,7 @@ function createDistBox(data,result){
     var width = 500;
     var height= 50;
     var xScale= d3.scaleLinear()
-        .domain([0,69])
+        .domain([0,67.6])
         .range([0,width])
 
     var svg= d3.select(".distBox")
@@ -259,8 +259,8 @@ function createDistBox(data,result){
         }
 
     })
-    .attr("width", width+margin.left+margin.right)
-    .attr("height", height+margin.top+margin.bottom)
+    // .attr("width", width+margin.left+margin.right)
+    // .attr("height", height+margin.top+margin.bottom)
     .attr("viewBox", "0 0 " + (width+margin.left+margin.right).toString()+ " " +(height+margin.top+margin.bottom).toString() )
     .append("g")
     .attr("transform", "translate(" + margin.left + "," +margin.top+")");
@@ -287,8 +287,8 @@ function createDistBox(data,result){
         .call(
             d3.axisBottom(xScale)
             .tickPadding(5)
-            .tickSize(3)
-            .tickValues([0,8,12,69])
+            .tickSize(5)
+            .tickValues([0,8,12,67.6])
             .tickFormat(d3.format(",.3"))
             ); // Create an axis component with d3.axisBottom
             
@@ -377,7 +377,7 @@ function createDistBox(data,result){
 ///function to create the line chart
 function createLineChart(dataArray, result){
     $(".lineChart").empty()
-    var margin = {top: 25, right: 50, bottom: 25, left: 50};
+    var margin = {top: 25, right: 100, bottom: 25, left: 50};
     var width = 500;
     var height= 300;
     var n = 15;
@@ -403,8 +403,8 @@ function createLineChart(dataArray, result){
 
 
     var svg= d3.select(".lineChart")
-        .attr("width", width+margin.left+margin.right)
-        .attr("height", height+margin.top+margin.bottom)
+        // .attr("width", width+margin.left+margin.right)
+        // .attr("height", height+margin.top+margin.bottom)
         .attr("viewBox", "0 0 " + (width+margin.left+margin.right).toString()+ " " +(height+margin.top+margin.bottom).toString() )
         .append("g")
         .attr("transform", "translate(" + margin.left + "," +margin.top+")");
@@ -427,18 +427,15 @@ function createLineChart(dataArray, result){
             .call(d3.axisLeft(yScale)
             // .tickValues([1, 3, 5,10,15,20,30,40,50,60])
             // .ticks(50)
-            .tickSize(1)
+            .tickPadding(5)
+            .tickSize(5)
             ); // Create an axis component with d3.axisLeft
         
         //append a group to be used later
         svg.append("g")
             .attr("id", "lineChart-legend")
 
-        var div = d3.select("#lineChart-wrap").append("div")
-            .attr("class", "tooltip")
-            .style("display","none")
-            .style("opacity", 0);
-
+        
         //run the line generator function for each array item passed into the main function
         for(var i=0; i<dataArray.length; i++){
             chartLineGenerator(dataArray[i],"line"+(i+1))
@@ -448,10 +445,10 @@ function createLineChart(dataArray, result){
         function legendGenerator(index, result){
             switch(index){
                 case 0:
-                    var legendText= "State NAS rate"
+                    var legendText= "State overall rate"
                     break;
                 case 1:
-                    var legendText= "State overall rate"
+                    var legendText= "State NAS rate"
                     break;
                 case 2:
                     var legendText= result + " NAS rate"
@@ -463,18 +460,23 @@ function createLineChart(dataArray, result){
             d3.select("#lineChart-legend")
                 .append("line")
                 .attr("class","chartLine line"+(index+1))
-                .attr("x1",width-130)
-                .attr("y1",12*index-4)
-                .attr("x2",width-100)
-                .attr("y2",12*index-4)
+                .attr("x1",width-60)
+                .attr("y1",15*(3-index)-4)
+                .attr("x2",width-30)
+                .attr("y2",15*(3-index)-4)
 
             d3.select("#lineChart-legend")
                 .append("text")
                 .text(legendText)
-                .attr("x", width-90)
-                .attr("y", 12*index)
+                .attr("x", width - 20)
+                .attr("y", 15*(3-index))
                 .attr("class", "legend-text")
         }
+
+        var div = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("display","none")
+            .style("opacity", 0);
 
         function chartLineGenerator(dataset,className){
             svg.append("path")
@@ -496,7 +498,7 @@ function createLineChart(dataArray, result){
                         .style("opacity", .9);
                     div.html("<p>"+d.y + "</p>")
                         .style("left", (d3.event.pageX-10) + "px")
-                        .style("top", (d3.event.pageY - 30) + "px");
+                        .style("top", (d3.event.pageY-30) + "px");
                 })
                 .on("mouseleave", function (d) {
                     div.transition()
@@ -530,8 +532,11 @@ var firstSymbolId;
 var hoveredCtId = null;
 var hoveredZipId = null;
 var zoomThreshold = 5.9;
-var COLORS = ['rgba(75,187,231,1)', 'rgba(42,131,182,1)', 'rgba(55,121,144,1)', 'rgba(50,90,120,1)', 'rgba(25,73,96,1)', 'rgba(37,24,68,1)','#ddd']
-var BREAKS = [0, 10, 15, 20, 25, 998, 999]
+//BLUES: var COLORS = ['rgba(75,187,231,1)', 'rgba(42,131,182,1)', 'rgba(55,121,144,1)', 'rgba(50,90,120,1)', 'rgba(25,73,96,1)', 'rgba(37,24,68,1)','#ddd']
+//REDS: var COLORS = ['rgba(211,132,132,1)', 'rgba(206,124,110,1)', 'rgba(155,74,74,1)', 'rgba(140,49,59,1)', 'rgba(102,39,41,1)', 'rgba(73,18,21,1)','#ddd']
+// var COLORS = ['#009392','#39b185','#9ccb86','#e9e29c','#eeb479','#e88471','#ddd']
+var COLORS = ['#e0c2a2','#d39c83','#c1766f','#a65461','#813753','#541f3f','#eee']
+var BREAKS = [5, 10, 15, 20, 30, 999]
 
 mapboxgl.accessToken = "pk.eyJ1Ijoia2FyaW1pZmFyIiwiYSI6ImNqOGtnaWp4OTBjemsyd211ZDV4bThkNmIifQ.Xg-Td2FFJso83Mmmc87NDA";
 var mapStyle = "mapbox://styles/karimifar/cjoox1jxa3wy42rkeftpo6c98";
@@ -868,7 +873,7 @@ function queryCounty(county){
                     $(".rate-change").text("")
                 }
                 
-                createLineChart([state_nas_trend,state_pnd_trend,cnt_nas_trend, cnt_pnd_trend],result);
+                createLineChart([state_pnd_trend,state_nas_trend,cnt_nas_trend, cnt_pnd_trend],result);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
                 
                 if(pnd_rate==0){

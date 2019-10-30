@@ -5,6 +5,13 @@
     .chart-col{
         width:45%;
     }
+    .chart{
+        flex-direction: column;
+    }
+    .chart-desc{
+        width:100%;
+        max-width: 800px;
+    }
    #main-rate{
        font-size: 48px;
    } 
@@ -28,7 +35,7 @@
     }
     .chart-col{
         width:100%;
-        height: unset;
+        height: 60vh;
     }
     
 }
@@ -43,7 +50,7 @@
     }
     .chart-col{
         width:100%;
-        height: unset;
+        height: 70vh;
     }
     .break-down-row h3{
         font-size: 28px;
