@@ -3,6 +3,12 @@
     font-family: 'halyard-text', sans-serif;
 }
 
+.desc-overflow::-webkit-scrollbar{
+    position: absolute;
+    display: none;
+
+}
+
 p,h2{
     margin:0;
 }
@@ -226,6 +232,7 @@ body{
     height: 100vh;
     overflow: scroll;
     width:60%;
+    scroll-behavior: smooth;
 }
 .desc-col{
 
