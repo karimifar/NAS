@@ -233,6 +233,7 @@ body{
     overflow: scroll;
     width:60%;
     scroll-behavior: smooth;
+    position: relative;
 }
 .desc-col{
 
