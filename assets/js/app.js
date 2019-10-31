@@ -275,11 +275,58 @@ function createDistBox(data,result){
         .attr("y2", "0%")
         .append("stop")
         .attr("offset","0%")
-        .style("stop-color","#3f91c4" )
+        .style("stop-color","#e0c2a2" )
+
     d3.select("#grad1")
         .append("stop")
         .attr("offset","100%")
-        .style("stop-color","#736a7f" )
+        .style("stop-color","#d39c83" )
+
+    d3.select("defs")
+        .append("linearGradient")
+        .attr("id","grad2")
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%")
+        .append("stop")
+        .attr("offset","0%")
+        .style("stop-color","#d39c83" )
+        
+    d3.select("#grad2")
+        .append("stop")
+        .attr("offset","100%")
+        .style("stop-color","#c1766f" )
+
+    d3.select("defs")
+        .append("linearGradient")
+        .attr("id","grad3")
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%")
+        .append("stop")
+        .attr("offset","0%")
+        .style("stop-color","#c1766f" )
+    d3.select("#grad3")
+        .append("stop")
+        .attr("offset","100%")
+        .style("stop-color","#a65461" )
+
+    d3.select("defs")
+        .append("linearGradient")
+        .attr("id","grad4")
+        .attr("x1", "0%")
+        .attr("y1", "0%")
+        .attr("x2", "100%")
+        .attr("y2", "0%")
+        .append("stop")
+        .attr("offset","0%")
+        .style("stop-color","#a65461" )
+    d3.select("#grad4")
+        .append("stop")
+        .attr("offset","30%")
+        .style("stop-color","#541f3f" )
 
     svg.append("g")
         .attr("class", "x axis")
@@ -288,7 +335,7 @@ function createDistBox(data,result){
             d3.axisBottom(xScale)
             .tickPadding(5)
             .tickSize(5)
-            .tickValues([0,8,12,67.6])
+            .tickValues([0,4.7,14.2,26.19,67.6])
             .tickFormat(d3.format(",.3"))
             ); // Create an axis component with d3.axisBottom
             
@@ -303,14 +350,47 @@ function createDistBox(data,result){
         .attr("fill","url(#grad1)")
 
     svg.append("g")
-        .attr("id","mostzips")
+        .attr("id","quart1")
         .append("rect")
         .attr("y", 0)
         .attr("x", 0)
         .attr("height", height)
-        .attr("width", xScale(4))
-        .attr("class", "mostzips")
-        .attr("transform","translate("+xScale(8)+" , 0)")
+        .attr("width", xScale(4.7))
+        .attr("class", "quart quart1")
+        .attr("fill","url(#grad1)")
+    
+    svg.append("g")
+        .attr("id","quart2")
+        .append("rect")
+        .attr("y", 0)
+        .attr("x", 0)
+        .attr("height", height)
+        .attr("width", xScale(9.5))
+        .attr("class", "quart quart2")
+        .attr("fill","url(#grad2)")
+        .attr("transform","translate("+xScale(4.7)+" 0)")
+    
+    svg.append("g")
+        .attr("id","quart3")
+        .append("rect")
+        .attr("y", 0)
+        .attr("x", 0)
+        .attr("height", height)
+        .attr("width", xScale(12))
+        .attr("class", "quart quart3")
+        .attr("fill","url(#grad3)")
+        .attr("transform","translate("+xScale(14.2)+" 0)")
+
+    svg.append("g")
+        .attr("id","quart4")
+        .append("rect")
+        .attr("y", 0)
+        .attr("x", 0)
+        .attr("height", height)
+        .attr("width", xScale(41.4))
+        .attr("class", "quart quart4")
+        .attr("fill","url(#grad4)")
+        .attr("transform","translate("+xScale(26.2)+" 0)")
 
     svg.select("#allzips").append("text")
         .text("All ZIP-codes")
@@ -327,11 +407,17 @@ function createDistBox(data,result){
         .attr("class", "dist-all-text dist-text")
 
 
-    svg.select("#mostzips").append("text")
-        .text("Most zip codes")
+    svg.select("#quart2").append("text")
+        .text("50% of zip codes")
         .attr("class", "dist-most-text dist-text")
-        .attr("x", xScale(12)+5)
-        .attr("y", height-5)
+        .attr("x", xScale(4.7)-5)
+        .attr("y", -8)
+
+    svg.select("#quart3").append("text")
+        .text("50% of zip codes")
+        .attr("class", "dist-most-text dist-text")
+        .attr("x", xScale(14.2))
+        .attr("y", -8)
 
     svg.append("g")
         .attr("id","thezip")
@@ -536,19 +622,24 @@ var zoomThreshold = 5.9;
 //REDS: var COLORS = ['rgba(211,132,132,1)', 'rgba(206,124,110,1)', 'rgba(155,74,74,1)', 'rgba(140,49,59,1)', 'rgba(102,39,41,1)', 'rgba(73,18,21,1)','#ddd']
 // var COLORS = ['#009392','#39b185','#9ccb86','#e9e29c','#eeb479','#e88471','#ddd']
 var COLORS = ['#e0c2a2','#d39c83','#c1766f','#a65461','#813753','#541f3f','#eee']
-var BREAKS = [5, 10, 15, 20, 30, 999]
+var BREAKS = [4.7, 14.2, 20, 26.2, 35, 999]
 
 mapboxgl.accessToken = "pk.eyJ1Ijoia2FyaW1pZmFyIiwiYSI6ImNqOGtnaWp4OTBjemsyd211ZDV4bThkNmIifQ.Xg-Td2FFJso83Mmmc87NDA";
 var mapStyle = "mapbox://styles/karimifar/cjoox1jxa3wy42rkeftpo6c98";
-var mapStyle2 = "mapbox://styles/karimifar/ck2548zbg0vfi1cryse3vrvwf";
+var mapStyle2 = "mapbox://styles/karimifar/ck2ey2mad1rtp1cmppck4wq2d";
 
 function createMap(){
+    var bounds = [
+        [-109.629974, 21.537354], // Southwest coordinates
+        [-91.393472,39.913594]  // Northeast coordinates
+    ];
     map = new mapboxgl.Map({
         container: 'theMap',
         zoom: 4.5,
         center: [-99.113241, 31.079125],
-        maxZoom: 11,
-        minZoom: 4,
+        maxZoom: 10,
+        minZoom: 4.7,
+        maxBounds: bounds,
         style: mapStyle2//'mapbox://styles/mapbox/streets-v11'
     });
 
