@@ -640,7 +640,7 @@ function createMap(){
         maxZoom: 10,
         minZoom: 4.7,
         maxBounds: bounds,
-        style: mapStyle//'mapbox://styles/mapbox/streets-v11'
+        style: mapStyle2//'mapbox://styles/mapbox/streets-v11'
     });
 
 // Find the index of the first symbol layer in the map style
