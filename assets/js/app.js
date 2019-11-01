@@ -625,7 +625,7 @@ var COLORS = ['#e0c2a2','#d39c83','#c1766f','#a65461','#813753','#541f3f','#eee'
 var BREAKS = [4.7, 14.2, 20, 26.2, 35, 999]
 
 mapboxgl.accessToken = "pk.eyJ1Ijoia2FyaW1pZmFyIiwiYSI6ImNqOGtnaWp4OTBjemsyd211ZDV4bThkNmIifQ.Xg-Td2FFJso83Mmmc87NDA";
-var mapStyle = "mapbox://styles/karimifar/cjoox1jxa3wy42rkeftpo6c98";
+var mapStyle = "mapbox://styles/mapbox/streets-v11";
 var mapStyle2 = "mapbox://styles/karimifar/ck2ey2mad1rtp1cmppck4wq2d";
 
 function createMap(){
@@ -640,7 +640,7 @@ function createMap(){
         maxZoom: 10,
         minZoom: 4.7,
         maxBounds: bounds,
-        style: mapStyle2//'mapbox://styles/mapbox/streets-v11'
+        style: mapStyle//'mapbox://styles/mapbox/streets-v11'
     });
 
 // Find the index of the first symbol layer in the map style
