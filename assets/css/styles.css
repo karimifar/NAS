@@ -605,6 +605,7 @@ svg text{
     margin-top: auto;
     flex-grow: 1;
     position: relative;
+    height: 100vh;
 }
 #theMap{
     width:100%;
