@@ -489,7 +489,7 @@ function createDistBox(data,result){
 ///function to create the line chart
 function createLineChart(dataArray, result){
     $(".lineChart").empty()
-    var margin = {top: 25, right: 100, bottom: 25, left: 50};
+    var margin = {top: 25, right: 150, bottom: 25, left: 50};
     var width = 500;
     var height= 300;
     var n = 15;
@@ -975,7 +975,7 @@ function queryCounty(county){
                 }
                 $("#res-row").attr("class", rateState)
                 $("#main-rate").text(pnd_rate)
-                var result = data[0].countyName + " County"
+                var result = data[0].countyName + " Cty"
                 $(".the-result").text(result)
 
              
