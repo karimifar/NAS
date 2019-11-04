@@ -40,6 +40,18 @@ var map;
 var hasOver65;
 var pin;
 
+function setGradHeight(){
+    $(".solid").height("100vh")
+    setTimeout(function(){
+        var h = $(".desc-col").height()
+        $(".solid").height(h)
+    }, 800);
+    
+}
+
+$(window).resize(function(){
+    setGradHeight()
+})
 $("#home-submit").on("click", function(event){
     event.preventDefault();
     hasOver65= false;
@@ -48,10 +60,10 @@ $("#home-submit").on("click", function(event){
     if(first){
         createMap();
         map.resize();
+        setGradHeight();
     }
     first=false
     queryZip(req_zip);
-    
     
 })
 function queryZip(zip){
@@ -145,14 +157,14 @@ function queryZip(zip){
                     }
                 }
                 
-                if(pnd_rate<8){
+                if(pnd_rate<4.8){
                     rateState=  "underrate";
                 }else     
-                if(pnd_rate>12){
+                if(pnd_rate>14.2){
                     rateState = "overrate";
                     console.log(pnd_rate)
                 }else   
-                if(8<pnd_rate<12){
+                if(4.8<pnd_rate<14.2){
                     rateState = "standard";
                 }
                                    
@@ -181,8 +193,10 @@ function queryZip(zip){
                 
                 if(pnd_rate==0){
                     $(".desc-row2").css("display","none")
+                    $(".desc-row1").addClass("single")
                 }else{
                     $(".desc-row2").css("display","flex")
+                    $(".desc-row1").removeClass("single")
                 }
                 $("#opioid-p").text(opioid_p+"%")
                 $("#other-p").text(100-opioid_p+"%")
@@ -250,11 +264,11 @@ function createDistBox(data,result){
     .attr("class",function(){
         var rate = data
         switch(true){
-            case(rate<8):
+            case(rate<4.8):
                 return "distBox underrate";
-            case(rate>12):
+            case(rate>14.2):
                 return "distBox overrate";
-            case(8<rate<12):
+            case(4.8<rate<14.2):
                 return "distBox";           
         }
 
@@ -335,29 +349,21 @@ function createDistBox(data,result){
             d3.axisBottom(xScale)
             .tickPadding(5)
             .tickSize(5)
-            .tickValues([0,4.7,14.2,26.19,67.6])
+            .tickValues([0,4.8,14.2,26.3,67.6])
             .tickFormat(d3.format(",.3"))
             ); // Create an axis component with d3.axisBottom
             
-    svg.append("g")
-        .attr("id", "allzips")
-        .append("rect")
-        .attr("y", 0)
-        .attr("x", 0)
-        .attr("height", height)
-        .attr("width", width)
-        .attr("class", "allzips")
-        .attr("fill","url(#grad1)")
+    // svg.append("g")
+    //     .attr("id", "allzips")
+    //     .append("rect")
+    //     .attr("y", 0)
+    //     .attr("x", 0)
+    //     .attr("height", height)
+    //     .attr("width", width)
+    //     .attr("class", "allzips")
+    //     .attr("fill","url(#grad1)")
 
-    svg.append("g")
-        .attr("id","quart1")
-        .append("rect")
-        .attr("y", 0)
-        .attr("x", 0)
-        .attr("height", height)
-        .attr("width", xScale(4.7))
-        .attr("class", "quart quart1")
-        .attr("fill","url(#grad1)")
+    
     
     svg.append("g")
         .attr("id","quart2")
@@ -365,18 +371,28 @@ function createDistBox(data,result){
         .attr("y", 0)
         .attr("x", 0)
         .attr("height", height)
-        .attr("width", xScale(9.5))
+        .attr("width", xScale(9.4))
         .attr("class", "quart quart2")
         .attr("fill","url(#grad2)")
-        .attr("transform","translate("+xScale(4.7)+" 0)")
-    
+        .attr("transform","translate("+xScale(4.8)+" 0)")
+
+    svg.append("g")
+        .attr("id","quart1")
+        .append("rect")
+        .attr("y", height/2)
+        .attr("x", 0)
+        .attr("height", height/2)
+        .attr("width", xScale(4.8))
+        .attr("class", "quart quart1")
+        .attr("fill","url(#grad1)")
+
     svg.append("g")
         .attr("id","quart3")
         .append("rect")
-        .attr("y", 0)
+        .attr("y", 1.5*height/2.5)
         .attr("x", 0)
-        .attr("height", height)
-        .attr("width", xScale(12))
+        .attr("height", height/2.5)
+        .attr("width", xScale(12.1))
         .attr("class", "quart quart3")
         .attr("fill","url(#grad3)")
         .attr("transform","translate("+xScale(14.2)+" 0)")
@@ -384,77 +400,87 @@ function createDistBox(data,result){
     svg.append("g")
         .attr("id","quart4")
         .append("rect")
-        .attr("y", 0)
+        .attr("y", 9*height/10)
         .attr("x", 0)
-        .attr("height", height)
-        .attr("width", xScale(41.4))
+        .attr("height", height/10)
+        .attr("width", xScale(41.3))
         .attr("class", "quart quart4")
         .attr("fill","url(#grad4)")
-        .attr("transform","translate("+xScale(26.2)+" 0)")
+        .attr("transform","translate("+xScale(26.3)+" 0)")
 
-    svg.select("#allzips").append("text")
-        .text("All ZIP-codes")
-        .attr("class", "dist-text")
-        .attr("x", function(){
-            if(data>8){
-                return 5
-            }else{
-                var textWidth = this.getBBox().width
-                return width-textWidth-5
-            }
-        })
-        .attr("y", -5)
-        .attr("class", "dist-all-text dist-text")
-
+    // svg.select("#allzips").append("text")
+    //     .text("All ZIP-codes")
+    //     .attr("class", "dist-text")
+    //     .attr("x", function(){
+    //         if(data>8){
+    //             return 5
+    //         }else{
+    //             var textWidth = this.getBBox().width
+    //             return width-textWidth-5
+    //         }
+    //     })
+    //     .attr("y", -5)
+    //     .attr("class", "dist-all-text dist-text")
+    svg.select("#quart1").append("text")
+        .text("25% of ZIP-codes")
+        .attr("class", "dist-q1-text dist-text")
+        .attr("x", -46)
+        .attr("y", height/2 -5)
 
     svg.select("#quart2").append("text")
-        .text("50% of zip codes")
-        .attr("class", "dist-most-text dist-text")
-        .attr("x", xScale(4.7)-5)
-        .attr("y", -8)
+        .text("50% of ZIP-codes")
+        .attr("class", "dist-q2-text dist-text")
+        .attr("x", xScale(4.8)-5)
+        .attr("y", -5)
 
     svg.select("#quart3").append("text")
-        .text("50% of zip codes")
-        .attr("class", "dist-most-text dist-text")
-        .attr("x", xScale(14.2))
-        .attr("y", -8)
+        .text("20% of ZIP-codes")
+        .attr("class", "dist-q3-text dist-text")
+        .attr("x", xScale(14.2)+4)
+        .attr("y", 1.5*height/2.5 -5)
+
+    svg.select("#quart4").append("text")
+        .text("5% of ZIP-codes")
+        .attr("class", "dist-q3-text dist-text")
+        .attr("x", xScale(42))
+        .attr("y", 9*height/10 -5)
 
     svg.append("g")
         .attr("id","thezip")
         .append("line")
         .attr("class","thezip-line")
         .attr("x1",xScale(data))
-        .attr("y1",-7)
+        .attr("y1",-17)
         .attr("x2",xScale(data))
-        .attr("y2",height +10)
+        .attr("y2",height +20)
 
     svg.select("#thezip").append("text")
-        .attr("class","thezip-text dist-text")
+        .attr("class","thezip-text")
         .text("Where " + result + " stands")
         .attr("x", function(){
             var textWidth = this.getBBox().width
-            return xScale(data) - textWidth/2
+            return (xScale(data) - textWidth/2)
         })
-        .attr("y", -20)
+        .attr("y", -30)
     svg.select("#thezip").append("path")
-        .attr("d", "M "+xScale(data)+" -8 L "+(xScale(data)-4)+" -15 L " +(xScale(data)+4)+" -15 L "+xScale(data)+" -8")
+        .attr("d", "M "+xScale(data)+" -18 L "+(xScale(data)-4)+" -25 L " +(xScale(data)+4)+" -25 L "+xScale(data)+" -18")
         .attr("id","dist-triangle")
 
     svg.select("#thezip").append("text")
         .text(data)
-        .attr("class","dist-text")
+        .attr("class","thezip-text")
         .attr("x", function(){
             var textWidth = this.getBBox().width
-            return xScale(data) - textWidth/2 
+            return xScale(data) - textWidth/2
         })
-        .attr("y",height+25)
-        .attr("class", "dist-text thezip-rate")
+        .attr("y",height+35)
+        .attr("class", "thezip-text thezip-rate")
 
     svg.select("#thezip").append("rect")
-        .attr("x", xScale(data)-20)
-        .attr("y", -20)
-        .attr("width", 40)
-        .attr("height", height+20)
+        .attr("x", xScale(data)-10)
+        .attr("y", -25)
+        .attr("width", 20)
+        .attr("height", height+50)
         .attr("opacity",0)
 
 }
@@ -602,6 +628,7 @@ function startTransitionQuery(){
     $("#main-rate").css("transform", "scale(0)")
     $("#main-rate").css("opacity", "0")
     $(".changeble").css("opacity", "0")
+    setGradHeight();
 }
 function afterDataTransition(){
     $("#main-rate").css("transform", "scale(1)")
@@ -939,11 +966,11 @@ function queryCounty(county){
                         var rate_change = ((pnd_rate - rate2010)/rate2010)*100
                     }
                 }
-                if(pnd_rate<8){
+                if(pnd_rate<4.8){
                     rateState=  "underrate";
-                }else if(pnd_rate>12){
+                }else if(pnd_rate>14.2){
                     rateState = "overrate";
-                }else if(8<pnd_rate<12){
+                }else if(4.8<pnd_rate<14.2){
                     rateState = "standard";
                 }
                 $("#res-row").attr("class", rateState)
