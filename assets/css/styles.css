@@ -510,15 +510,7 @@ svg text{
 .distBox .x.axis .domain{
     display: none;
 }
-.mostzips{
-    fill: #006e8c;
-    opacity: 0.75;
-}
-.allzips{
-    stroke-width: 2px;
-    stroke: #eee;
-    opacity: 0.75;
-}
+
 .dist-text{
     font-size: 10px;
     fill: #9FCEDD;

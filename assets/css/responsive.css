@@ -26,7 +26,7 @@
     }
 }
 
-@media only screen and (max-width: 1024px) {
+@media print, screen and (max-width: 1024px) {
     .desc-overflow{
         width:100%;
         height: unset;
@@ -39,6 +39,7 @@
     }
     #theMap{
         border: solid 1px #9FCEDD;
+        width: 100%;
     }
     .chart-col{
         width:100%;
