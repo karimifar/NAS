@@ -669,7 +669,8 @@ function createMap(){
         maxBounds: bounds,
         style: mapStyle2//'mapbox://styles/mapbox/streets-v11'
     });
-
+    var nav = new mapboxgl.NavigationControl();
+    map.addControl(nav, 'top-left');
 // Find the index of the first symbol layer in the map style
     
 
@@ -996,8 +997,10 @@ function queryCounty(county){
                 
                 if(pnd_rate==0){
                     $(".desc-row2").css("display","none")
+                    $(".desc-row1").addClass("single")
                 }else{
                     $(".desc-row2").css("display","flex")
+                    $(".desc-row1").removeClass("single")
                 }
                 $("#opioid-p").text(opioid_p+"%")
                 $("#other-p").text(100-opioid_p+"%")

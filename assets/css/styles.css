@@ -104,7 +104,8 @@ body{
     flex-direction: row;
     justify-content: flex-end;
     z-index: 1000;
-    width: 100%;
+    right:0;
+    width: 50px;
 }
 .pre-query.started h1{
     display: none;
