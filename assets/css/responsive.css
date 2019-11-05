@@ -33,6 +33,9 @@
         /* padding: 50px 0; */
         /* padding-top: 120px; */
     }
+    .pre-query.started{
+        right:0px;
+    }
     .map-row{
         padding: 20px;
         background: #003f5c;

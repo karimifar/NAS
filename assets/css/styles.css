@@ -94,7 +94,10 @@ form{
 body{
     background: #eee;
 }
+.mapboxgl-ctrl-top-right{
+    top:9px;
 
+}
 
 .pre-query.started{
     background: none;
@@ -104,7 +107,7 @@ body{
     flex-direction: row;
     justify-content: flex-end;
     z-index: 1000;
-    right:0;
+    right:43px;
     width: 50px;
 }
 .pre-query.started h1{
@@ -613,6 +616,8 @@ svg text{
     z-index: 1;
     /* max-height: 100%; */
 }
+
+
 
 #popupBox{
     position: absolute;

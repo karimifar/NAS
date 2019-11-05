@@ -670,7 +670,7 @@ function createMap(){
         style: mapStyle2//'mapbox://styles/mapbox/streets-v11'
     });
     var nav = new mapboxgl.NavigationControl();
-    map.addControl(nav, 'top-left');
+    map.addControl(nav, 'top-right');
 // Find the index of the first symbol layer in the map style
     
 
