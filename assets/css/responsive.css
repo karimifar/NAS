@@ -79,6 +79,12 @@
     .desc-row2{
         margin:0;
     }
+    .desc-row3{
+        padding:20px 0px;
+    }
+    .chart-desc{
+        padding: 0 20px;
+    }
     .pnd-rate{
         flex-direction: row;
     }
