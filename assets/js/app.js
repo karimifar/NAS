@@ -1,4 +1,6 @@
 var search_input;
+var zipList;
+var ctyList;
 var api_URL= "https://intense-tor-20370.herokuapp.com" //"http://localhost:3306" //
 var first = true;
 var rateState;
@@ -48,6 +50,14 @@ function setGradHeight(){
     }, 800);
     
 }
+
+$.get(api_URL+"/api/nas/nas_cty_all", function(data){
+    ctyList = data;
+})
+$.get(api_URL+"/api/nas/nas_zip_all", function(data){
+    zipList = data;
+})
+
 
 $(window).resize(function(){
     setGradHeight()
