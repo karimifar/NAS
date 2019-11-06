@@ -791,21 +791,27 @@ function createMap(){
         
         map.resize();
 
+
+        map.on("move" ,function(){
+            $("#popupBox").css("display", "none")
+        });
         map.on("mousemove", "counties_fill", function(e) {
             
-            map.getCanvas().style.cursor = "pointer"
-            $("#theMap").css("cursor","pointer")
+            
+            // $("#theMap").css("cursor","pointer")
 
                 if (e.features.length > 0) {
                     if (hoveredCtId) {
                         map.setFeatureState({source: 'counties_source', id: hoveredCtId}, { hover: false});
                     }
+                    map.getCanvas().style.cursor = "pointer"
                     hoveredCtId = e.features[0].id;
                     var county = e.features[0].properties.countyName;
                     var pnd_rate = e.features[0].properties.pndexp_rate;
                     if(pnd_rate == 9999){
                         pnd_rate = "Data Supressed"
                     }
+                    $("#popupBox").css("display", "block")
                     $("#popupBox").html("<p>"+county+" County</p><p>"+pnd_rate+"</p>")
 
                     map.setFeatureState({source: 'counties_source', id: hoveredCtId}, { hover: true});
@@ -817,6 +823,7 @@ function createMap(){
                 map.setFeatureState({source: 'counties_source', id: hoveredCtId}, { hover: false});
                 $("#popupBox").css("display", "block")
             }
+            map.getCanvas().style.cursor = "auto"
             hoveredCtId =  null;
             $("#popupBox").css("display", "none")
         });
@@ -827,20 +834,22 @@ function createMap(){
         map.on("mouseover", "counties_fill", function(e) {
             $("#popupBox").css("display", "block")
         });
-
+        
         map.on("mousemove", "zips_fill", function(e) {
-            map.getCanvas().style.cursor = "pointer"
+            
 
                 if (e.features.length > 0) {
                     if (hoveredZipId) {
                         map.setFeatureState({source: 'zips_source', id: hoveredZipId}, { hover: false});
                     }
+                    map.getCanvas().style.cursor = "pointer"
                     hoveredZipId = e.features[0].id;
                     var zipcode = e.features[0].properties.zip;
                     var pnd_rate = e.features[0].properties.pndexp_rate;
                     if(pnd_rate == 9999){
                         pnd_rate = "Data Supressed"
                     }
+                    $("#popupBox").css("display", "block")
                     $("#popupBox").html("<p>"+zipcode+"</p><p>"+pnd_rate+"</p>")
                     console.log(e.features[0].properties)
                     map.setFeatureState({source: 'zips_source', id: hoveredZipId}, { hover: true});
@@ -854,6 +863,8 @@ function createMap(){
             }
             hoveredZipId =  null;
             if(!hoveredCtId){
+                console.log("left")
+                map.getCanvas().style.cursor = "auto"
                 $("#popupBox").css("display", "none")
             }
             
