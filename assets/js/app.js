@@ -1,4 +1,4 @@
-var req_zip;
+var search_input;
 var api_URL= "https://intense-tor-20370.herokuapp.com" //"http://localhost:3306" //
 var first = true;
 var rateState;
@@ -55,7 +55,7 @@ $(window).resize(function(){
 $("#home-submit").on("click", function(event){
     event.preventDefault();
     hasOver65= false;
-    req_zip = $("#home-input").val().trim();
+    search_input = $("#home-input").val().trim();
     $(".after-query").css("display", "block")
     if(first){
         createMap();
@@ -63,7 +63,12 @@ $("#home-submit").on("click", function(event){
         setGradHeight();
     }
     first=false
-    queryZip(req_zip);
+    if (isNaN(search_input)){
+        queryCounty(search_input)
+    }else{
+        queryZip(search_input);
+    }
+    
     
 })
 function queryZip(zip){
@@ -187,7 +192,7 @@ function queryZip(zip){
                     $(".rate-change").text("")
                 }
                 
-                createLineChart([state_pnd_trend,state_nas_trend,zip_nas_trend, zip_pnd_trend],result);
+                createLineChart([state_nas_trend,state_pnd_trend,zip_nas_trend, zip_pnd_trend],result);
                 createDistBox(pnd_rate, result);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
                 
@@ -557,10 +562,10 @@ function createLineChart(dataArray, result){
         function legendGenerator(index, result){
             switch(index){
                 case 0:
-                    var legendText= "State overall rate"
+                    var legendText= "State NAS rate"
                     break;
                 case 1:
-                    var legendText= "State NAS rate"
+                    var legendText= "State overall rate"
                     break;
                 case 2:
                     var legendText= result + " NAS rate"
@@ -885,22 +890,24 @@ function queryCounty(county){
     startTransitionQuery()
     $.get(req_url, function(data){
         console.log(data)
-        var c_lat = data[0].cnty_centroid.c_lat
-        var c_lng = data[0].cnty_centroid.c_lng
-        console.log(c_lat, c_lng)
-        map.flyTo({
-            center:[c_lng,c_lat],
-            zoom: 5.8
-        })
-        if(pin){
-            pin.remove();
-        }
-        pin = new mapboxgl.Marker()
-            .setLngLat([c_lng, c_lat])
-            .addTo(map);
+        
 
         
         if(data.length!==0 && data[14].pndexp_rate!=-1){
+            var c_lat = data[0].cnty_centroid.c_lat
+            var c_lng = data[0].cnty_centroid.c_lng
+            console.log(c_lat, c_lng)
+            map.flyTo({
+                center:[c_lng,c_lat],
+                zoom: 5.8
+            })
+            if(pin){
+                pin.remove();
+            }
+            pin = new mapboxgl.Marker()
+                .setLngLat([c_lng, c_lat])
+                .addTo(map);
+
             $(".chart1").css("display", "none")
             $(".pre-query").css("height","80px")
             $(".pre-query").addClass("started")
@@ -992,7 +999,7 @@ function queryCounty(county){
                     $(".rate-change").text("")
                 }
                 
-                createLineChart([state_pnd_trend,state_nas_trend,cnt_nas_trend, cnt_pnd_trend],result);
+                createLineChart([state_nas_trend,state_pnd_trend,cnt_nas_trend, cnt_pnd_trend],result);
                 var opioid_p = (nas_rate/pnd_rate *100).toFixed(0);
                 
                 if(pnd_rate==0){
@@ -1010,8 +1017,21 @@ function queryCounty(county){
         }else if(data.length==0){
             alert("Please Enter a Valid Texas County Name")
         }else{
+            var c_lat = data[0].cnty_centroid.c_lat
+            var c_lng = data[0].cnty_centroid.c_lng
+            console.log(c_lat, c_lng)
+            map.flyTo({
+                center:[c_lng,c_lat],
+                zoom: 5.8
+            })
+            if(pin){
+                pin.remove();
+            }
+            pin = new mapboxgl.Marker()
+                .setLngLat([c_lng, c_lat])
+                .addTo(map);
             //there's no county-level data
-            alert("Message for when there is no county-level data")
+            alert("The data is supressed for this area!")
         }
         
     })   

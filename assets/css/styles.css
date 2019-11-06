@@ -458,13 +458,13 @@ svg text{
     fill: #d45087;
     stroke: #ddd;
 }
-.line2 {
+.line1 {
     stroke: #eee;
     stroke-dasharray: 8 3;
     /* stroke-width: 3; */
     /* stroke-linecap: round; */
 }
-.line2-dot {
+.line1-dot {
     fill: #eee;
     stroke: #ddd;
 }
@@ -476,10 +476,10 @@ svg text{
     stroke: #ddd;
 }
 
-.line1 {
+.line2 {
     stroke: #eee;
 }
-.line1-dot {
+.line2-dot {
     fill: #eee;
     stroke: #ddd;
 }

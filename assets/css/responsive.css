@@ -51,8 +51,23 @@
     
 }
 
+@media only screen and (max-width: 800px) {
+    .desc-col h1{
+        text-align: left;
+        margin:0 20px;
+        margin-top:10px;
+    }
+
+}
 
 @media only screen and (max-width: 600px) {
+    .desc-col h1{
+        font-size: 20px;
+        width: 70%;
+        border-bottom: none;
+        margin-top: 5px;
+        /* min-width: ; */
+    }
     .desc-overflow{
         width:100%;
         height: unset;
@@ -68,7 +83,7 @@
     }
     .break-down-text-col{
         margin-top: 0;
-        padding: 20px;
+        padding: 20px 0;
     }
     .break-down-graph{
         display:none;
