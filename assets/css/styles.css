@@ -35,7 +35,7 @@ p,h2{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    transition: all 1s cubic-bezier(1, 0, 0, 1);
+    transition: all 0.5s ease-in-out;
 }
 
 
@@ -53,6 +53,7 @@ form{
     max-width: 600px;
     text-align: center;
     margin-left: -30px;
+    position: relative;
 }
 #home-input{
     width: 99%;
@@ -632,3 +633,54 @@ svg text{
 .mapboxgl-marker{
     pointer-events: none;
 }
+
+.mapboxgl-ctrl-bottom-left , .mapboxgl-ctrl-bottom-right{
+    display: none;
+}
+
+
+
+.autocomplete-items {
+    width: 90%;
+    margin: auto;
+    position: absolute;
+    border: 1px solid #d4d4d4;
+    border-bottom: none;
+    border-top: none;
+    z-index: 99;
+    /*position the autocomplete items to be the same width as the container:*/
+    top: 80%;
+    left: 35px;
+    right: 0;
+    color:#555;
+    border-radius: 5px;
+  }
+
+  .started .autocomplete-items{
+      top:90%;
+      left:0;
+  }
+  .autocomplete-items div {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #ffffffd0;
+    border-bottom: 1px solid #d4d4d4;
+  }
+  .autocomplete-items div:first-child{
+      /* background: red; */
+      border-top-left-radius: 5px;
+      border-top-right-radius: 5px;
+  }
+  .autocomplete-items div:last-child{
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+  .autocomplete-items div:hover {
+    /*when hovering an item:*/
+    background-color: #e9e9e9;
+  }
+  .autocomplete-active {
+    /*when navigating through the items using the arrow keys:*/
+    background-color: #006e8cff !important;
+    color: #ffffff;
+  }
