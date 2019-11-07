@@ -56,6 +56,12 @@ function autocomplete(inp, arr) {
             }
           }
         }
+        // if(listCount==1 ){
+        //     console.log(b.getElementsByTagName("input")[0].value)
+        // }
+        if(listCount ==0){
+            autoIsClosed = true;
+        }
     });
     /*execute a function presses a key on the keyboard:*/
     inp.addEventListener("keydown", function(e) {
