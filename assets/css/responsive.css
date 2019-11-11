@@ -67,6 +67,7 @@
 }
 
 @media only screen and (max-width: 600px) {
+    
     .desc-col h1{
         font-size: 20px;
         width: 70%;
@@ -112,5 +113,8 @@
     .pnd-text{
         width:100%;
         text-align: center
+    }
+    #mapLegend{
+        width:100%;
     }
 }
