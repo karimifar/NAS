@@ -1064,3 +1064,34 @@ $("#theMap").mousemove(function(e){
     $("#popupBox").css("top", position_y-55+"px")
 
 })
+
+
+
+
+
+
+
+///MAP LEGEND GENERATOR
+function mapLegend(){
+    for(var i =0; i<BREAKS.length; i++){
+        var legend = $("<div class='legend'>")
+        $(".unsuppress").append(legend)
+        var legColor = $("<div class='legend-color'>")
+
+        if(i != BREAKS.length-1){
+            var breakPoint = $("<div class='break'><p>"+BREAKS[i]+"</p></div>")
+            legend.append(breakPoint)
+        }
+        
+        legend.append(legColor)
+        legColor.css("background", COLORS[i])
+
+    }
+    var legend = $("<div class='legend'>")
+    $(".suppress").append(legend)
+    var legColor = $("<div class='legend-color'>")
+    legend.append(legColor)
+    legColor.css("background", COLORS[6])
+    $(".suppress").append("<span>Data Suppressed</span>")
+}
+mapLegend();

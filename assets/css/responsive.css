@@ -24,6 +24,9 @@
    .break-down-text-col{
     font-size: 16px;
     }
+    #mapLegend{
+        width:50%;
+    }
 }
 
 @media print, screen and (max-width: 1024px) {
