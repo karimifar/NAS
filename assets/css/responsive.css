@@ -43,8 +43,9 @@
         background: #003f5c;
     }
     #theMap{
-        border: solid 2px #9FCEDD;
+        border: solid 1px #9FCEDD;
         box-shadow: 0 0 5px #111;
+        border-radius: 4px;
         width: 100%;
     }
     .chart-col{
