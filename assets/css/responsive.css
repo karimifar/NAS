@@ -37,11 +37,11 @@
         right:0px;
     }
     .map-row{
-        padding: 20px;
+        padding: 0 25px;
         background: #003f5c;
     }
     #theMap{
-        border: solid 1px #9FCEDD;
+        border: solid 2px #9FCEDD;
         width: 100%;
     }
     .chart-col{
