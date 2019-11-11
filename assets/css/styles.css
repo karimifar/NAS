@@ -239,7 +239,7 @@ body{
     width:60%;
     scroll-behavior: smooth;
     position: relative;
-    box-shadow: 4px 0 30px #003f5c77;
+    box-shadow: 4px 0 20px #003f5c55;
     z-index: 10;
 }
 .desc-col{
