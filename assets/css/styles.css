@@ -176,7 +176,7 @@ body{
     /* min-width: 500px; */
     max-width:1200px;
     width: 40%;
-    height: 100vh;
+    /* height: 100vh; */
     display: flex;
     flex-direction: column;
     justify-content: center;
