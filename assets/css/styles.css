@@ -762,3 +762,31 @@ svg text{
     background-color: #006e8cff !important;
     color: #ffffff;
   }
+
+  #notification{
+      width:80%;
+      background: #ffffffee;
+      position: absolute;
+      left:0;
+      right: 0;
+      top: 20px;
+      height: auto;
+      margin: auto;
+      z-index: 101;
+      opacity: 0;
+      transition: all 0.5s ease-in-out;
+      pointer-events: none;
+      padding: 10px;
+      text-align: center;
+      color: #7c0f00;
+      font-size: 18px;
+      font-weight: 100;
+      border: 1px solid #eee;
+      max-width: 600px;
+      box-shadow: 0 0 10px #fff;
+      border-radius: 4px;
+  }
+  #notification.not-in{
+      pointer-events: all;
+      opacity: 1;
+  }

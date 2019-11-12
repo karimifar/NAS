@@ -5,6 +5,7 @@ var listArr;
 var api_URL= "https://intense-tor-20370.herokuapp.com" //"http://localhost:3306" //
 var first = true;
 var rateState;
+var notTimeout;
 var state_pnd_trend=[
     {"y": "4.8" ,"i":0},
     {"y": "5.4", "i":1},
@@ -81,12 +82,9 @@ $("#home-submit").on("click", function(event){
 function queryZip(zip){
     var req_url= api_URL + "/api/nas/nas_zip/" + zip;
     console.log(req_url)
-    
-    // $(".test").removeClass("invisible")
     startTransitionQuery()
+    $("#notification").removeClass("not-in")
     $.get(req_url, function(data){
-        
-
         console.log(data)
         if(data.length!==0 && data[data.length-1].pndexp_rate!=-1){
             $(".chart1").css("display", "flex")
@@ -219,7 +217,13 @@ function queryZip(zip){
             alert("Please Enter a Valid Texas ZIP-Code")
         }else{
             var cntyName = data[0].zip_county.county
+            $("#notification").text("Displaying county-level data because the data is suppressed in "+zip)
+            // clearTimeout(notTimeout)
             queryCounty(cntyName)
+            $("#notification").addClass("not-in")
+            setTimeout(function(){
+                notTimeout = $("#notification").removeClass("not-in")
+            }, 3000)
             // alert("No Data for This Zip")
         }
         
@@ -925,7 +929,7 @@ function createMap(){
 function queryCounty(county){
     var req_url= api_URL + "/api/nas/nas_county/" + county;
     console.log(req_url)
-    
+    $("#notification").removeClass("not-in")
     // $(".test").removeClass("invisible")
     startTransitionQuery()
     $.get(req_url, function(data){
@@ -1072,7 +1076,12 @@ function queryCounty(county){
                 .setLngLat([c_lng, c_lat])
                 .addTo(map);
             //there's no county-level data
-            alert("The data is supressed for this area!")
+            $("#notification").text("The data is suppressed in this area!")
+            // clearTimeout(notTimeout)
+            $("#notification").addClass("not-in")
+            setTimeout(function(){
+                notTimeout = $("#notification").removeClass("not-in")
+            }, 3000)         
         }
         
     })   
