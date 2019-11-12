@@ -88,7 +88,7 @@ function queryZip(zip){
         
 
         console.log(data)
-        if(data.length!==0 && data[14].pndexp_rate!=-1){
+        if(data.length!==0 && data[data.length-1].pndexp_rate!=-1){
             $(".chart1").css("display", "flex")
 
             var z_lat = data[0].zip_county.z_lat
