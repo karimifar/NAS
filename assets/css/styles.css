@@ -674,13 +674,39 @@ svg text{
 
 #popupBox{
     position: absolute;
-    background: #fff;
+    background: #ffffffcc;
     padding: 5px;
     z-index: 1000;
-    top: 40px;
-    left:40px;
     display: none;
     pointer-events: none;
+    text-align: center;
+    border-radius: 4px;
+    box-shadow: 0 0 2px #111111a0;
+}
+
+#popupBox .rate{
+    font-weight: 900;
+    font-size: 18px;
+    padding-top: 5px;
+}
+#popupBox .area{
+    font-size: 12px;
+    font-weight: 300;
+    border-bottom: 1px solid #222;
+    padding: 0 5px;
+}
+#popupBox .underrated .rate{
+    color: rgb(1, 112, 75);
+}
+#popupBox .overrated .rate{
+    color: #7c0f00;
+}
+#popupBox .standard .rate{
+    color: #555;
+}
+#popupBox .dataSupressed .rate{
+    font-size: 12px;
+    font-weight: 100;
 }
 .mapboxgl-marker{
     pointer-events: none;

@@ -815,11 +815,19 @@ function createMap(){
                     hoveredCtId = e.features[0].id;
                     var county = e.features[0].properties.countyName;
                     var pnd_rate = e.features[0].properties.pndexp_rate;
+
+                    var popupClass = "dataSupressed"
                     if(pnd_rate == 9999){
                         pnd_rate = "Data Supressed"
+                    }else if(pnd_rate>14.2){
+                        popupClass = "overrated"
+                    }else if(pnd_rate<4.8){
+                        popupClass = "underrated"
+                    }else if(4.8<pnd_rate<14.2){
+                        popupClass = "standard"
                     }
                     $("#popupBox").css("display", "block")
-                    $("#popupBox").html("<p>"+county+" County</p><p>"+pnd_rate+"</p>")
+                    $("#popupBox").html("<div class="+popupClass+"><p class='area'>"+county+" County</p><p class='rate'>"+pnd_rate+"</p></div>")
 
                     map.setFeatureState({source: 'counties_source', id: hoveredCtId}, { hover: true});
                 }
@@ -853,11 +861,25 @@ function createMap(){
                     hoveredZipId = e.features[0].id;
                     var zipcode = e.features[0].properties.zip;
                     var pnd_rate = e.features[0].properties.pndexp_rate;
+
+
+                    var popupClass = "dataSupressed"
+                    console.log(popupClass)
                     if(pnd_rate == 9999){
                         pnd_rate = "Data Supressed"
+                        popupClass = "dataSupressed"
+                    }else if(pnd_rate>14.2){
+                        popupClass = "overrated"
+                    }else if(pnd_rate<4.8){
+                        popupClass = "underrated"
+                    }else{
+                        console.log(pnd_rate)
+                        popupClass = "standard"
                     }
+                    console.log(popupClass)
                     $("#popupBox").css("display", "block")
-                    $("#popupBox").html("<p>"+zipcode+"</p><p>"+pnd_rate+"</p>")
+                    $("#popupBox").html("<div class="+popupClass+"><p class='area'>"+zipcode+"</p><p class='rate'>"+pnd_rate+"</p></div>")
+                    // $("#popupBox").html("<p>"+zipcode+"</p><p>"+pnd_rate+"</p>")
                     console.log(e.features[0].properties)
                     map.setFeatureState({source: 'zips_source', id: hoveredZipId}, { hover: true});
                 }
@@ -1002,7 +1024,8 @@ function queryCounty(county){
                 $("#res-row").attr("class", rateState)
                 $("#main-rate").text(pnd_rate)
                 var result = data[0].countyName + " Cty"
-                $(".the-result").text(result)
+                var countyResult = data[0].countyName + " County"
+                $(".the-result").text(countyResult)
 
              
                 if(rate_change>0){
@@ -1059,9 +1082,9 @@ $("#theMap").mousemove(function(e){
     
     var position_x = e.pageX - $('#theMap').offset().left;
     var position_y = e.pageY - $('#theMap').offset().top;
-    console.log(position_x, position_y)
-    $("#popupBox").css("left", position_x+"px")
-    $("#popupBox").css("top", position_y-55+"px")
+    var popupX = position_x - $("#popupBox").width()/2
+    $("#popupBox").css("left", popupX+"px")
+    $("#popupBox").css("top", position_y-60+"px")
 
 })
 
