@@ -217,7 +217,7 @@ function queryZip(zip){
             alert("Please Enter a Valid Texas ZIP-Code")
         }else{
             var cntyName = data[0].zip_county.county
-            $("#notification").text("Displaying county-level data because the data is suppressed in "+zip)
+            $("#notification").html("Displaying county-level data because the data is suppressed in <span>"+zip+"</span>")
             // clearTimeout(notTimeout)
             queryCounty(cntyName)
             $("#notification").addClass("not-in")
