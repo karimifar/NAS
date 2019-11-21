@@ -16,6 +16,7 @@ p,h2{
     /* padding: 10%; */
 }
 .pre-query h1{
+    /* margin-top: 10vh; */
     font-family: "freight-display-pro", serif;
     font-size: 30px;
     font-weight: 800;
@@ -24,16 +25,15 @@ p,h2{
     max-width: 500px;
     visibility: visible;
     transition: all 0.4s cubic-bezier(1, 0, 0, 1);
-
 }
 .pre-query{
     height:100vh;
-    background: #003f5c;
-    padding: 20px 10%;
+    background: radial-gradient(circle, rgba(0,91,116,1) 0%, rgba(0,63,92,1) 100%);
+    /* padding: 20px 10%; */
     color: #fff;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
     transition: all 0.5s ease-in-out;
 }
@@ -55,6 +55,20 @@ form{
     margin-left: -30px;
     position: relative;
 }
+.form-div{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    position: relative;
+    z-index: 99999;
+    align-items: center;
+    padding: 20vh 20px 0;
+}
+.pre-query.started .form-div{
+    padding-top:50px;
+}
+
 #home-input{
     width: 99%;
     height: 100px;
@@ -112,6 +126,9 @@ body{
     width: 50px;
 }
 .pre-query.started h1{
+    display: none;
+}
+.pre-query.started .hide-after{
     display: none;
 }
 .pre-query.started label{
