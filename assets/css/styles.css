@@ -793,3 +793,32 @@ svg text{
       pointer-events: all;
       opacity: 1;
   }
+
+
+  #county-btn{
+      position: absolute;
+      font-family: 'halyard-display', sans-serif;
+      z-index: 100;
+      top: 15px;
+      left:15px;
+      background: #fff;
+      padding: 8px;
+      color: #f15a29;
+      border-radius: 10px;
+      /* width:100px; */
+      font-weight: 300;
+      line-height: 1em;
+      box-shadow: 0 0 1px #fff;
+      border: 1px solid #aaa;
+  }
+  #county-btn:hover{
+    box-shadow: 0 0 8px #fff; 
+  }
+  #county-btn:focus{
+    outline: none; 
+  }
+
+  #county-btn.disabled{
+      display: none;
+      
+  }

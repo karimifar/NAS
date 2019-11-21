@@ -82,13 +82,15 @@ $("#home-submit").on("click", function(event){
 function queryZip(zip){
     var req_url= api_URL + "/api/nas/nas_zip/" + zip;
     console.log(req_url)
-    startTransitionQuery()
+    
+    // afterDataTransition()
     $("#notification").removeClass("not-in")
     $.get(req_url, function(data){
         console.log(data)
         if(data.length!==0 && data[data.length-1].pndexp_rate!=-1){
             $(".chart1").css("display", "flex")
-
+            startTransitionQuery()
+            setTimeout(afterDataTransition, 400)
             var z_lat = data[0].zip_county.z_lat
             var z_lng = data[0].zip_county.z_lng
             console.log(z_lat, z_lng)
@@ -108,7 +110,7 @@ function queryZip(zip){
             $("#home-input").text(" ")
             // $(".test").addClass("invisible")
             setTimeout(function(){
-                afterDataTransition()
+                
 
                 var zip_nas_trend = []
                 var zip_pnd_trend = []
@@ -438,25 +440,25 @@ function createDistBox(data,result){
     //     .attr("y", -5)
     //     .attr("class", "dist-all-text dist-text")
     svg.select("#quart1").append("text")
-        .text("25% of ZIP-codes")
+        .text("25% of ZIP Codes")
         .attr("class", "dist-q1-text dist-text")
         .attr("x", -46)
         .attr("y", height/2 -5)
 
     svg.select("#quart2").append("text")
-        .text("50% of ZIP-codes")
+        .text("50% of ZIP Codes")
         .attr("class", "dist-q2-text dist-text")
         .attr("x", xScale(4.8)-5)
         .attr("y", -5)
 
     svg.select("#quart3").append("text")
-        .text("20% of ZIP-codes")
+        .text("20% of ZIP Codes")
         .attr("class", "dist-q3-text dist-text")
         .attr("x", xScale(14.2)+4)
         .attr("y", 1.5*height/2.5 -5)
 
     svg.select("#quart4").append("text")
-        .text("5% of ZIP-codes")
+        .text("5% of ZIP Codes")
         .attr("class", "dist-q3-text dist-text")
         .attr("x", xScale(42))
         .attr("y", 9*height/10 -5)
@@ -687,9 +689,8 @@ function createMap(){
     });
     var nav = new mapboxgl.NavigationControl();
     map.addControl(nav, 'top-right');
-// Find the index of the first symbol layer in the map style
-    
 
+// Find the index of the first symbol layer in the map style
     map.on('load', function () {
         var layers = map.getStyle().layers;
         for (var i = 0; i < layers.length; i++) {
@@ -698,6 +699,17 @@ function createMap(){
                 break;
             }
         }
+
+        map.on("zoom", function () {
+            if (map.getZoom() > zoomThreshold) {
+                isCounty=false;
+                $("#county-btn").removeClass("disabled")
+            } 
+            else {
+                isCounty=true;
+                $("#county-btn").addClass("disabled")
+            }
+        })
         
         
         map.addSource("zips_source", {
@@ -931,13 +943,13 @@ function queryCounty(county){
     console.log(req_url)
     $("#notification").removeClass("not-in")
     // $(".test").removeClass("invisible")
-    startTransitionQuery()
+    
     $.get(req_url, function(data){
         console.log(data)
         
-
-        
         if(data.length!==0 && data[14].pndexp_rate!=-1){
+            startTransitionQuery()
+            setTimeout(afterDataTransition, 400)
             var c_lat = data[0].cnty_centroid.c_lat
             var c_lng = data[0].cnty_centroid.c_lng
             console.log(c_lat, c_lng)
@@ -958,7 +970,6 @@ function queryCounty(county){
             $("#home-input").text(" ")
             // $(".test").addClass("invisible")
             setTimeout(function(){
-                afterDataTransition()
 
                 var cnt_nas_trend = []
                 var cnt_pnd_trend = []
@@ -1069,12 +1080,12 @@ function queryCounty(county){
                 center:[c_lng,c_lat],
                 zoom: 5.8
             })
-            if(pin){
-                pin.remove();
-            }
-            pin = new mapboxgl.Marker()
-                .setLngLat([c_lng, c_lat])
-                .addTo(map);
+            // if(pin){
+            //     pin.remove();
+            // }
+            // pin = new mapboxgl.Marker()
+            //     .setLngLat([c_lng, c_lat])
+            //     .addTo(map);
             //there's no county-level data
             $("#notification").text("The data is suppressed in this area!")
             // clearTimeout(notTimeout)
@@ -1127,3 +1138,19 @@ function mapLegend(){
     $(".suppress").append("<span>Data Suppressed</span>")
 }
 mapLegend();
+
+
+
+
+///ZOOM BACK TO COUNTY LEVEL
+var isCounty=false;
+
+$("#county-btn").on("click", function(e){
+    e.preventDefault();
+    console.log("clicked")
+    if(!isCounty){
+        map.flyTo({
+            zoom: zoomThreshold -0.8
+        })
+    }  
+})
