@@ -36,6 +36,8 @@ p,h2{
     justify-content: flex-start;
     align-items: center;
     transition: all 0.5s ease-in-out;
+    position: relative;
+    overflow: hidden;
 }
 
 
