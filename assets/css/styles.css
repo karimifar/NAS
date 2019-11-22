@@ -152,14 +152,13 @@ body{
 
 #sec-submit{
     position: absolute;
-    right:4px;
     background:#fff;
     color:#006e8c;
     border: none;
     font-size: 20px;
     padding: 0px;
     top: 5px;
-    right: 13px;
+    right: 14px;
 }
 .pre-query.started{
     display: none;
