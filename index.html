@@ -21,7 +21,7 @@
     <script src="./assets/js/d3.min.js"></script>
 </head>
 <body>
-
+    
     <div class="wrap-all">
         <div class="test invisible">
             loading
@@ -32,9 +32,9 @@
                     How many babies in your ZIP-code were exposed to drugs in utero?
                 </h1>
                 <label for="ZIPcode" class="hide-after">Type in your ZIP Code or County to find out:</label> 
-                <form>
+                <form id="home-form">
                     <!-- <label for="ZIPcode">ZIP-code:</label> -->
-                    <input autocomplete="off" id="home-input" class="nas-input" placeholder="EX. 76104" value="76104">
+                    <input autocomplete="off" id="home-input" class="nas-input" placeholder="EX. 76104 or Travis" value="">
                     <button id="home-submit" type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
                 </form>
             </div>
@@ -374,6 +374,10 @@
 
 
         <div class="after-query">
+            <form id="sec-form">
+                <input autocomplete="off" id="sec-input" class="nas-input" placeholder="" value="">
+                <button id="sec-submit" type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
+            </form>
             <div id="res-row">
                 <div class="desc-overflow">
                     <div class="solid"></div>

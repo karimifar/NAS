@@ -4,6 +4,7 @@ $.get(api_URL+"/api/alltxcounties", function(data){
         zipList = data;
         listArr = ctyList.concat(zipList)
         autocomplete(document.getElementById("home-input"), listArr);
+        autocomplete(document.getElementById("sec-input"), listArr);
 
     })
 })

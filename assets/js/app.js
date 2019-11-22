@@ -76,9 +76,19 @@ $("#home-submit").on("click", function(event){
     }else{
         queryZip(search_input);
     }
-    
-    
 })
+
+$("#sec-submit").on("click", function(event){
+    event.preventDefault();
+    hasOver65= false;
+    search_input = $("#sec-input").val().trim();
+    if (isNaN(search_input)){
+        queryCounty(search_input)
+    }else{
+        queryZip(search_input);
+    }
+})
+
 function queryZip(zip){
     var req_url= api_URL + "/api/nas/nas_zip/" + zip;
     console.log(req_url)

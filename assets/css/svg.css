@@ -56,12 +56,14 @@
     bottom: 0;
     width: 80%;
     min-width: 800px;
+    transition: all 0.3s ease-in-out;
 }
 .svg-div{
     position: absolute;
     width:25%;
     min-width: 400px;
     bottom: 0;
+    transition: all 0.3s ease-in-out;
 }
 #left-pills{
     align-self: flex-start;

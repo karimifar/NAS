@@ -36,6 +36,10 @@
         /* padding: 50px 0; */
         /* padding-top: 120px; */
     }
+    #sec-form{
+        right:20px;
+        top: 20px
+    }
     .pre-query.started{
         right:0px;
     }
@@ -66,7 +70,7 @@
         margin-top:10px;
     }
     .svg-div{
-        min-width: 300px;
+        min-width: 250px;
     }
     #baby{
         min-width: 100px;
@@ -129,6 +133,7 @@
         bottom: 0;
     }
     .svg-div{
-        min-width: 200px;
+        widows: 30%;
+        min-width: 100px;
     }
 }
