@@ -43,6 +43,8 @@
     #home-input{
         height: 65px;
         font-size: 42px;
+        padding: 2px 10px;
+        padding-right: 60px;
     }
     #home-submit{
         right: 15px;
@@ -114,6 +116,7 @@
     #home-input{
         height: 50px;
         font-size: 36px;
+
     }
     #home-submit{
         right: 10px;
