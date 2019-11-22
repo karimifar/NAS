@@ -765,7 +765,7 @@ svg text{
       top: 10vh;
       height: auto;
       margin: auto;
-      z-index: 101;
+      z-index: 99999;
       opacity: 0;
       transition: all 0.5s ease-in-out;
       pointer-events: none;

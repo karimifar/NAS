@@ -53,9 +53,9 @@
     right:0;
 }
 #baby{
-    bottom: 0;
+    bottom: -400px;
     width: 80%;
-    min-width: 800px;
+    min-width: 900px;
     transition: all 0.3s ease-in-out;
 }
 .svg-div{
