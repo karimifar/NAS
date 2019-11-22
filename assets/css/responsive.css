@@ -27,9 +27,32 @@
     #mapLegend{
         width:50%;
     }
+    .svg-div{
+        width: 25%;
+        min-width: 360px;
+    }
 }
 
 @media print, screen and (max-width: 1024px) {
+    .pre-query h1{
+        font-size: 24px;
+    }
+    #home-form{
+        max-width: 500px;
+    }
+    #home-input{
+        height: 65px;
+        font-size: 42px;
+    }
+    #home-submit{
+        right: 15px;
+        top:0px;
+        font-size: 36px;
+    }
+    #home-input::placeholder{
+        font-size: 28px;
+    }
+
     .desc-overflow{
         width:100%;
         height: unset;
@@ -59,7 +82,8 @@
         width:100%;
     }
     .svg-div{
-        min-width: 360px;
+        width: 20%;
+        min-width: 300px;
     }
 }
 
@@ -80,7 +104,27 @@
 }
 
 @media only screen and (max-width: 600px) {
-    
+    .pre-query h1{
+        font-size: 18px;
+        max-width: 360px;
+    }
+    #home-form{
+        max-width: 500px;
+    }
+    #home-input{
+        height: 50px;
+        font-size: 36px;
+    }
+    #home-submit{
+        right: 10px;
+        top:-3px;
+        font-size: 30px;
+    }
+    #home-input::placeholder{
+        font-size: 24px;
+    }
+
+
     .desc-col h1{
         font-size: 20px;
         width: 70%;
