@@ -28,7 +28,7 @@ p,h2{
 }
 .pre-query{
     height:100vh;
-    background: radial-gradient(circle, rgba(0, 52, 66, 0.8) 0%, rgba(0,63,92,1) 100%);
+    background: radial-gradient(circle, rgb(2, 76, 97) 0%, rgba(0,63,92,1) 100%);
     /* padding: 20px 10%; */
     color: #fff;
     display: flex;
@@ -723,7 +723,7 @@ svg text{
     z-index: 99;
     /*position the autocomplete items to be the same width as the container:*/
     top: 100%;
-    color:#555;
+    color:#fff;
     border-radius: 5px;
   }
 
@@ -734,7 +734,7 @@ svg text{
   .autocomplete-items div {
     padding: 10px;
     cursor: pointer;
-    background-color: #ffffffd0;
+    background-color: #11111170;
     border-bottom: 1px solid #d4d4d4;
   }
   .autocomplete-items div:first-child{
@@ -748,11 +748,11 @@ svg text{
 }
   .autocomplete-items div:hover {
     /*when hovering an item:*/
-    background-color: #e9e9e9;
+    background-color: #003f5cdd;
   }
   .autocomplete-active {
     /*when navigating through the items using the arrow keys:*/
-    background-color: #006e8cff !important;
+    background-color: #003f5cdd !important;
     color: #ffffff;
   }
 

@@ -1,3 +1,8 @@
+@media only screen and (max-width: 1600px){
+    #baby{
+        bottom: -300px;
+    }
+}
 @media only screen and (max-width: 1400px) {
     .desc-overflow{
         width:55%;
@@ -28,11 +33,11 @@
         width:50%;
     }
     .svg-div{
-        width: 25%;
-        min-width: 360px;
+        width: 37.5%;
+        min-width: 540px;
     }
     #baby{
-        bottom: -200px;
+        bottom: -220px;
     }
 }
 
@@ -87,8 +92,8 @@
         width:100%;
     }
     .svg-div{
-        width: 20%;
-        min-width: 300px;
+        width: 30%;
+        min-width: 450px;
     }
 
     #baby{
@@ -103,7 +108,7 @@
         margin-top:10px;
     }
     .svg-div{
-        min-width: 250px;
+        min-width: 375px;
     }
     #baby{
         bottom: -130px;
@@ -188,8 +193,8 @@
         bottom: 0;
     }
     .svg-div{
-        width: 40%;
-        min-width: 100px;
+        width: 60%;
+        min-width: 150px;
     }
 
     #baby{

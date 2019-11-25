@@ -42,6 +42,8 @@
     position: absolute;
     z-index: 100;
     left:0;
+    pointer-events: none;
+
 }
 
 #right-over{
@@ -51,16 +53,18 @@
     position: absolute;
     z-index: 100;
     right:0;
+    pointer-events: none;
 }
 #baby{
     bottom: -400px;
     width: 80%;
     min-width: 900px;
     transition: all 0.3s ease-in-out;
+    pointer-events: none;
 }
 .svg-div{
     position: absolute;
-    width:25%;
+    width:37%;
     min-width: 400px;
     bottom: 0;
     transition: all 0.3s ease-in-out;
@@ -77,3 +81,14 @@
     padding: 0;
     overflow: hidden;
 } */
+
+svg{
+    overflow: visible !important;
+}
+
+/* .near{
+ opacity: 0.5;
+} */
+.near:hover{
+ opacity: 1;
+}
