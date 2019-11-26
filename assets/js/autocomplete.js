@@ -65,10 +65,12 @@ function autocomplete(inp, arr) {
         }
     });
     /*execute a function presses a key on the keyboard:*/
+    var inTheList = false;
     inp.addEventListener("keydown", function(e) {
         var x = document.getElementById(this.id + "autocomplete-list");
         if (x) x = x.getElementsByTagName("div");
         if (e.keyCode == 40) {
+          inTheList=true;
           /*If the arrow DOWN key is pressed,
           increase the currentFocus variable:*/
           currentFocus++;
@@ -77,12 +79,13 @@ function autocomplete(inp, arr) {
         } else if (e.keyCode == 38) { //up
           /*If the arrow UP key is pressed,
           decrease the currentFocus variable:*/
+          inTheList=true
           currentFocus--;
           /*and and make the current item more visible:*/
           addActive(x);
         } else if (e.keyCode == 13) {
           /*If the ENTER key is pressed, prevent the form from being submitted,*/
-          if(!autoIsClosed){
+          if(!autoIsClosed && inTheList){
             e.preventDefault();
             if (currentFocus > -1) {
                 /*and simulate a click on the "active" item:*/
