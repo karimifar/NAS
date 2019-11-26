@@ -15,24 +15,24 @@ fetusMove.to("#fetus", 1,{rotation:getRandom(1,3), transformOrigin: "50% 50%", e
     
 
 var ringMove = new TimelineMax({repeat:-1});
-for(var i=0; i<10; i++){
+for(var i=0; i<20; i++){
     ringMove.to(".ring-1", 1,{opacity:Math.random, ease:Power2.easeIn})
     ringMove.to(".ring-2", 1,{opacity:Math.random, ease:Power2.easeIn})
-    ringMove.to(".ring-3", 1,{opacity:getRandom(5,10)/10, ease:Power2.easeIn})
+    ringMove.to(".ring-3", 1,{opacity:getRandom(3,10)/10, ease:Power2.easeIn})
 }
 ringMove.staggerTo(".ring", 1,{opacity:1, ease:Power2.easeIn},1)
 // ringMove.staggerTo(".ring", 1,{opacity:1},0.5)
 
-function  eitherOr(a,b){
-    if (Math.random()>0.5){
-        return a
-    }else{
-        return b
-    }
-}
-function getRandom(min,max){
-    return Math.floor(Math.random() * (max - min + 1) + min);
-}
+var drugShell = new TimelineMax({repeat:-1});
+drugShell.staggerTo(".circle-pill .pill-shell", 1, {opacity:0.1}, 0.1)
+    .staggerTo(".double-pill .pill-shell", 1, {opacity:0.5}, 0.1, "-=1")
+    .staggerTo(".simple-pill .pill-shell", 1, {opacity:0.1}, 0.1, "-=1")
+    .staggerTo(".simple-pill-ellipse .pill-shell", 1, {opacity:0.1}, 0.1, "-=1")
+    .staggerTo(".pill-shell", 1, {opacity:0.25}, 0.2)
+    
+
+
+
 $(".pill").on("mouseenter", function(){
     var moveX= eitherOr("-=","+=") + getRandom(10,40)
     var moveY= eitherOr("-=","+=") + getRandom(10,40)
@@ -48,3 +48,15 @@ svgOut.staggerTo("#pills-group-right .pill", 1, {y:-1200, rotation:360, scale:4,
 
 svgOut.duration(1.8)
 
+
+
+function  eitherOr(a,b){
+    if (Math.random()>0.5){
+        return a
+    }else{
+        return b
+    }
+}
+function getRandom(min,max){
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}

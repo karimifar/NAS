@@ -761,7 +761,7 @@ function createMap(){
                     COLORS[6],
                     
                 ],
-                // 'fill-opacity':0.75
+                // 'fill-opacity':0.5
             }
         }, firstSymbolId);
 

@@ -85,10 +85,3 @@
 svg{
     overflow: visible !important;
 }
-
-/* .near{
- opacity: 0.5;
-} */
-.near:hover{
- opacity: 1;
-}
