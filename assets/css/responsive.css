@@ -16,6 +16,7 @@
     .chart-desc{
         width:100%;
         max-width: 800px;
+        margin-bottom: 10px;
     }
    #main-rate{
        font-size: 48px;

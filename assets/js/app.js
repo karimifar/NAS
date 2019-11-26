@@ -64,18 +64,15 @@ $("#home-submit").on("click", function(event){
     event.preventDefault();
     hasOver65= false;
     search_input = $("#home-input").val().trim();
-    $(".after-query").css("display", "block")
-    if(first){
-        createMap();
-        map.resize();
-        setGradHeight();
-    }
-    first=false
+    
     if (isNaN(search_input)){
         queryCounty(search_input)
     }else{
         queryZip(search_input);
     }
+
+        
+    
 })
 
 $("#sec-submit").on("click", function(event){
@@ -98,6 +95,20 @@ function queryZip(zip){
     $.get(req_url, function(data){
         console.log(data)
         if(data.length!==0 && data[data.length-1].pndexp_rate!=-1){
+            $(".after-query").css("display", "block")
+            
+            if (first){
+                createMap();
+                map.resize();
+                setGradHeight();
+                svgOut.play()
+                setTimeout(function(){
+                    $(".pre-query").addClass("started")
+                    // $(".pre-query").css("height","80px")
+                    $(".after-query-slide").addClass("animate slideIn")
+                },1800)
+                first = false
+            }
             $(".chart1").css("display", "flex")
             startTransitionQuery()
             setTimeout(afterDataTransition, 400)
@@ -115,13 +126,13 @@ function queryZip(zip){
                 .setLngLat([z_lng, z_lat])
                 .addTo(map);
 
-            $(".pre-query").css("height","80px")
-            $(".pre-query").addClass("started")
+            
+            
             $("#home-input").text(" ")
-            // $(".test").addClass("invisible")
-            setTimeout(function(){
-                
 
+            setTimeout(visualizeData,400)
+                
+            function visualizeData(){
                 var zip_nas_trend = []
                 var zip_pnd_trend = []
                 var rate2010 =data[6].pndexp_rate;
@@ -136,7 +147,7 @@ function queryZip(zip){
                         zip_pnd_trend.push({"y":data[i].pndexp_rate, "i":i}) 
                     }
 
-                    if(data[i].pndexp_rate > 65){
+                    if(data[i].pndexp_rate > 85){
                         hasOver65=true;
                     }
                     console.log(zip_pnd_trend)
@@ -223,8 +234,9 @@ function queryZip(zip){
                 $("#opioid-p").text(opioid_p+"%")
                 $("#other-p").text(100-opioid_p+"%")
                 
+            }
+            
 
-            },400)
         }else if(data.length==0){
             alert("Please Enter a Valid Texas ZIP-Code")
         }else{
@@ -517,7 +529,7 @@ function createDistBox(data,result){
 ///function to create the line chart
 function createLineChart(dataArray, result){
     $(".lineChart").empty()
-    var margin = {top: 25, right: 150, bottom: 25, left: 50};
+    var margin = {top: 25, right: 50, bottom: 25, left: 50};
     var width = 500;
     var height= 300;
     var n = 15;
@@ -527,7 +539,7 @@ function createLineChart(dataArray, result){
         // .domain([0,n-1])
         .range([0, width]);
     var ydomain;
-    if(hasOver65){ydomain=150}else{ydomain=60}
+    if(hasOver65){ydomain=160}else{ydomain=60}
 
     // 6. Y scale will use the randomly generate number 
     var yScale = d3.scaleLinear()
@@ -600,16 +612,16 @@ function createLineChart(dataArray, result){
             d3.select("#lineChart-legend")
                 .append("line")
                 .attr("class","chartLine line"+(index+1))
-                .attr("x1",width-60)
-                .attr("y1",15*(3-index)-4)
-                .attr("x2",width-30)
-                .attr("y2",15*(3-index)-4)
+                .attr("x1",width-160)
+                .attr("y1",15*(3-index)-19)
+                .attr("x2",width-130)
+                .attr("y2",15*(3-index)-19)
 
             d3.select("#lineChart-legend")
                 .append("text")
                 .text(legendText)
-                .attr("x", width - 20)
-                .attr("y", 15*(3-index))
+                .attr("x", width - 120)
+                .attr("y", 15*(3-index)-15)
                 .attr("class", "legend-text")
         }
 
@@ -958,6 +970,20 @@ function queryCounty(county){
         console.log(data)
         
         if(data.length!==0 && data[14].pndexp_rate!=-1){
+            $(".after-query").css("display", "block")
+            $(".after-query-slide").removeClass("animate slideIn")
+            if (first){
+                createMap();
+                map.resize();
+                setGradHeight();
+                svgOut.play()
+                setTimeout(function(){
+                    $(".pre-query").addClass("started")
+                    // $(".pre-query").css("height","80px")
+                    $(".after-query-slide").addClass("animate slideIn")
+                },1800)
+                first=false;
+            }
             startTransitionQuery()
             setTimeout(afterDataTransition, 400)
             var c_lat = data[0].cnty_centroid.c_lat
@@ -975,11 +1001,12 @@ function queryCounty(county){
                 .addTo(map);
 
             $(".chart1").css("display", "none")
-            $(".pre-query").css("height","80px")
-            $(".pre-query").addClass("started")
             $("#home-input").text(" ")
+
+            
             // $(".test").addClass("invisible")
-            setTimeout(function(){
+            setTimeout(visualizeData,400)
+            function visualizeData(){
 
                 var cnt_nas_trend = []
                 var cnt_pnd_trend = []
@@ -995,7 +1022,7 @@ function queryCounty(county){
                         cnt_pnd_trend.push({"y":data[i].pndexp_rate, "i":i}) 
                     }
 
-                    if(data[i].pndexp_rate > 65){
+                    if(data[i].pndexp_rate > 85){
                         hasOver65=true;
                     }
                     console.log(cnt_pnd_trend)
@@ -1077,28 +1104,23 @@ function queryCounty(county){
                 }
                 $("#opioid-p").text(opioid_p+"%")
                 $("#other-p").text(100-opioid_p+"%")
-                
-
-            },400)
+            
+            }
         }else if(data.length==0){
             alert("Please Enter a Valid Texas County Name")
         }else{
             var c_lat = data[0].cnty_centroid.c_lat
             var c_lng = data[0].cnty_centroid.c_lng
             console.log(c_lat, c_lng)
-            map.flyTo({
-                center:[c_lng,c_lat],
-                zoom: 5.8
-            })
-            // if(pin){
-            //     pin.remove();
-            // }
-            // pin = new mapboxgl.Marker()
-            //     .setLngLat([c_lng, c_lat])
-            //     .addTo(map);
-            //there's no county-level data
+            if(!first){
+                map.flyTo({
+                    center:[c_lng,c_lat],
+                    zoom: 5.8
+                })
+            }
+
             $("#notification").text("The data is suppressed in this area!")
-            // clearTimeout(notTimeout)
+            svgOut.reverse()
             $("#notification").addClass("not-in")
             setTimeout(function(){
                 notTimeout = $("#notification").removeClass("not-in")
