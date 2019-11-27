@@ -139,6 +139,7 @@ function queryZip(zip){
             setTimeout(visualizeData,400)
                 
             function visualizeData(){
+                hasOver65=false;
                 var zip_nas_trend = []
                 var zip_pnd_trend = []
                 var rate2010 =data[6].pndexp_rate;
@@ -1013,7 +1014,7 @@ function queryCounty(county){
             // $(".test").addClass("invisible")
             setTimeout(visualizeData,400)
             function visualizeData(){
-
+                hasOver65=false;
                 var cnt_nas_trend = []
                 var cnt_pnd_trend = []
                 var rate2010 =data[6].pndexp_rate;
