@@ -17,10 +17,12 @@ function resize(e){
 }
 
 panelSlider.addEventListener("mousedown", function(e){
+    $("body").css("pointer-events", "none")
     m_pos = e.x;
     document.addEventListener("mousemove", resize, false);
   }, false);
 
 document.addEventListener("mouseup", function(){
+    $("body").css("pointer-events", "auto")
     document.removeEventListener("mousemove", resize, false);
 }, false);
