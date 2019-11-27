@@ -27,9 +27,7 @@
 <body>
     
     <div class="wrap-all">
-        <div class="test invisible">
-            loading
-        </div>
+        
         <div class="pre-query">
             <div class="form-div">
                 <h1 class="hide-after">
@@ -376,15 +374,13 @@
         </div>
 
 
-
-
         <div class="after-query ">
             <form id="sec-form" class="after-query-slide">
                 <input autocomplete="off" id="sec-input" class="nas-input" placeholder="" value="" >
                 <button id="sec-submit" type="submit" class="btn btn-primary"><i class="fas fa-search"></i></button>
             </form>
             <div id="res-row">
-                <div class="desc-overflow after-query-slide">
+                <div id="left-panel" class="desc-overflow after-query-slide">
                     <div class="solid after-query-slide"></div>
                     <div class="desc-col after-query-slide">
                         <h1>Prenatal Drug Exposure Rates in <span class="the-result"></span></h1>
@@ -469,7 +465,13 @@
                         
                     </div>
                 </div>
-                <div class="chart-col">
+
+                <div id="right-panel" class="chart-col">
+                    <div id="panelSlider">
+                        <div id="slide-icon">
+                            <p><i class="fas fa-angle-left"></i><i class="fas fa-angle-right"></i></p>
+                        </div>
+                    </div>
                     <div class="map-row after-query-slide">
                         
                         <div id="theMap">
@@ -484,8 +486,6 @@
                         
                     </div>
                 </div>
-               
-
             </div>
             
         </div>
@@ -494,5 +494,6 @@
     <script src="./assets/js/app.js"></script>
     <script src="./assets/js/autocomplete.js"></script>
     <script src="./assets/js/animations.js"></script>
+    <script src="./assets/js/drag.js"></script>
 </body>
 </html>

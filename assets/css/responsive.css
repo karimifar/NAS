@@ -43,6 +43,9 @@
 }
 
 @media print, screen and (max-width: 1024px) {
+    #panelSlider{
+        display: none;
+    }
     .pre-query h1{
         font-size: 24px;
     }
@@ -63,7 +66,9 @@
     #home-input::placeholder{
         font-size: 28px;
     }
-
+    #res-row{
+        flex-wrap: wrap;
+    }
     .desc-overflow{
         width:100%;
         height: unset;

@@ -6,6 +6,8 @@ var api_URL= "https://intense-tor-20370.herokuapp.com" //"http://localhost:3306"
 var first = true;
 var rateState;
 var notTimeout;
+var screenW= window.innerWidth
+var screenH= window.innerHeight
 var state_pnd_trend=[
     {"y": "4.8" ,"i":0},
     {"y": "5.4", "i":1},
@@ -44,6 +46,12 @@ var map;
 var hasOver65;
 var pin;
 
+
+$(window).resize(function(){
+    screenW= window.innerWidth
+    screenH= window.innerHeight
+    setGradHeight()
+})
 function setGradHeight(){
     $(".solid").height("100vh")
     setTimeout(function(){
@@ -57,9 +65,7 @@ function setGradHeight(){
 
 
 
-$(window).resize(function(){
-    setGradHeight()
-})
+
 $("#home-submit").on("click", function(event){
     event.preventDefault();
     hasOver65= false;

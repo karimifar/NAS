@@ -169,7 +169,7 @@ body{
 
 .chart-col{
     /* min-width: 500px; */
-    max-width:1200px;
+    /* max-width:1200px; */
     width: 40%;
     /* height: 100vh; */
     display: flex;
@@ -233,7 +233,6 @@ body{
     overflow: scroll;
     width:60%;
     scroll-behavior: smooth;
-    position: relative;
     box-shadow: 4px 0 20px #003f5c55;
     z-index: 10;
 }
@@ -261,7 +260,7 @@ body{
 }
 #res-row{
     display: flex;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
 }
 
 .desc-row{
@@ -849,4 +848,60 @@ svg text{
     .slideIn {
         -webkit-animation-name: slideIn;
         animation-name: slideIn;
+    }
+
+
+    #left-panel{
+        flex-grow: 1;
+        min-width: none;
+
+    }
+    #right-panel {
+        /* position: absolute; */
+        /* width: 96px; */
+        right: 0;
+        position: relative;
+        z-index: 900
+    }
+    
+    #panelSlider{
+        position: absolute;
+        top: 0;
+        left:0px;
+        background: #111111bb;
+        z-index: 10000;
+        width: 4px;
+        height: 100vh;
+        cursor: col-resize;
+        transition: all 0.2s ease-in-out;
+    }
+    #panelSlider:hover{
+        background: #111;
+    }
+    #panelSlider:hover #slide-icon p{
+        background: #003f5c;
+    }
+
+    #slide-icon{
+        width:44px;
+        position: absolute;
+        color: #fff;
+        top:49vh;
+        left:-20px;
+        display: flex;
+        justify-content: center;
+        text-align: center;
+    }
+    #slide-icon p{
+        padding: 0px;
+        /* background: #003f5c; */
+        background: #003f5c90;
+        width:100%;
+        text-align: center;
+        margin: auto;
+        border-radius: 5px;
+        box-shadow: 0 0 1px #fff;
+    }
+    #slide-icon i{
+        margin:4px;
     }
