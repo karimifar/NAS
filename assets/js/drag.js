@@ -8,7 +8,7 @@ function resize(e){
     var dx = m_pos - e.x;
     m_pos = e.x;
     if((e.x<0.8*screenW)){
-        if(m_pos<0.4*screenW){
+        if(m_pos<0.45*screenW){
             document.querySelector("#left-panel").classList.add("narrow")
         }else{
             document.querySelector("#left-panel").classList.remove("narrow")
