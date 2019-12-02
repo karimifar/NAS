@@ -1,0 +1,38 @@
+.narrow .break-down-graph{
+    display:none;
+}
+
+.narrow .break-down-text-col{
+    margin-top: 0;
+    padding: 20px 0;
+}
+
+.narrow .desc-col h1{
+    font-size: 20px;
+    width: 70%;
+    border-bottom: none;
+    margin-top: 5px;
+    /* min-width: ; */
+}
+.narrow .desc-row1{
+    flex-direction: column;
+}
+.narrow .pnd-rate{
+    flex-direction: row;
+}
+.narrow .pnd-text{
+    width:100%;
+    text-align: center
+}
+
+.narrow .chart{
+    flex-direction: column;
+}
+.narrow .chart-desc{
+    width:100%;
+    max-width: 800px;
+    margin-bottom: 10px;
+}
+.narrow #main-rate{
+    font-size: 48px;
+} 

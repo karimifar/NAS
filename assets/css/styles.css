@@ -616,6 +616,7 @@ svg text{
 #mapLegend{
     position: absolute;
     width: 42%;
+    min-width: 220px;
     height: 80px;
     bottom: 15px;
     right: 15px;
@@ -636,9 +637,11 @@ svg text{
 }
 .suppress .legend{
     align-self: center;
+    
 }
 .suppress span{
     padding: 0 5px;
+
 }
 .suppress .legend-color{
     border: 1px solid #aaa;
@@ -646,11 +649,13 @@ svg text{
 }
 .legend .break{
    
+
     width: 100%;
     text-align: right;
 }
 .break p {
     margin-right: -10px;
+    pointer-events: none;
 }
 .legend{
     width: 16.66%;
@@ -854,14 +859,14 @@ svg text{
     #left-panel{
         flex-grow: 1;
         min-width: none;
-
     }
+
     #right-panel {
         /* position: absolute; */
         /* width: 96px; */
         right: 0;
         position: relative;
-        z-index: 900
+        z-index: 900;
     }
     
     #panelSlider{

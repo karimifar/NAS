@@ -704,15 +704,15 @@ var mapStyle2 = "mapbox://styles/karimifar/ck2ey2mad1rtp1cmppck4wq2d";
 
 function createMap(){
     var bounds = [
-        [-109.629974, 21.537354], // Southwest coordinates
-        [-91.393472,39.913594]  // Northeast coordinates
+        [-113.983901, 20.833183], // Southwest coordinates
+        [-87.097884,39.646082]  // Northeast coordinates
     ];
     map = new mapboxgl.Map({
         container: 'theMap',
         zoom: 4.5,
         center: [-99.113241, 31.079125],
         maxZoom: 10,
-        minZoom: 4.7,
+        minZoom: 3,
         maxBounds: bounds,
         style: mapStyle2//'mapbox://styles/mapbox/streets-v11'
     });
