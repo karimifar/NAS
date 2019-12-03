@@ -617,6 +617,9 @@ function createLineChart(dataArray, result){
                     break;
             }
             d3.select("#lineChart-legend")
+                .append("g")
+                .attr("class", "chart-rate legend rate-"+(index+1))
+                .attr("data-code", "rate-"+(index+1))
                 .append("line")
                 .attr("class","chartLine line"+(index+1))
                 .attr("x1",width-160)
@@ -624,7 +627,7 @@ function createLineChart(dataArray, result){
                 .attr("x2",width-130)
                 .attr("y2",15*(3-index)-19)
 
-            d3.select("#lineChart-legend")
+            d3.select("#lineChart-legend .rate-"+(index+1))
                 .append("text")
                 .text(legendText)
                 .attr("x", width - 120)
@@ -638,12 +641,18 @@ function createLineChart(dataArray, result){
             .style("opacity", 0);
 
         function chartLineGenerator(dataset,className){
-            svg.append("path")
+            svg.append("g")
+                .attr("class", "chart-rate line-group rate-"+(i+1))
+                .attr("data-code", "rate-"+(i+1))
+                .append("path")
                 .datum(dataset) // 10. Binds data to the line 
                 .attr("class", "chartLine "+className) // Assign a class for styling 
                 .attr("d", line); // 11. Calls the line generator 
         
-            svg.selectAll(".dot")
+            svg.select(".line-group.rate-"+(i+1))
+                .append("g")
+                .attr("class","circle-g")
+                .selectAll(".dot")
                 .data(dataset)
                 .enter().append("circle") // Uses the enter().append() method
                 .attr("class", className+"-dot chartDot") // Assign a class for styling
@@ -666,6 +675,8 @@ function createLineChart(dataArray, result){
                         .style("opacity", 0)
                 })
         }
+
+        listenToChart()
     }
 
 
@@ -1177,6 +1188,22 @@ function mapLegend(){
     $(".suppress").append("<span>Data Suppressed</span>")
 }
 mapLegend();
+
+
+function listenToChart(){
+    var rateElements= [".rate-1", ".rate-2", ".rate-3", ".rate-4"]
+    rateElements.forEach(function(rateElement){
+        console.log(rateElement)
+        $(rateElement).on("mouseover", function(){
+            var target = "." + $(this).attr("data-code")
+            $(".chart-rate").css("opacity", "0.4")
+            $(target).css("opacity", "1")
+        })
+        $(rateElement).on("mouseleave",function(){
+            $(".chart-rate").css("opacity", "1")
+        })
+    })
+}
 
 
 
