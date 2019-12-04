@@ -43,6 +43,14 @@
 }
 
 @media print, screen and (max-width: 1024px) {
+    body{
+        background: #eee;
+        height: auto;
+        overflow: auto;
+    }
+    .desc-overflow::-webkit-scrollbar{
+        display: none;
+    }
     #panelSlider{
         display: none;
     }
