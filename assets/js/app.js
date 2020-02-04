@@ -2,7 +2,7 @@ var search_input;
 var zipList;
 var ctyList;
 var listArr;
-var api_URL= "https://intense-tor-20370.herokuapp.com" //"http://localhost:3306" //
+var api_URL= "txhealth.herokuapp.com" //"http://localhost:3306" //
 var first = true;
 var rateState;
 var notTimeout;
@@ -1213,4 +1213,15 @@ $("#county-btn").on("click", function(e){
             zoom: zoomThreshold -0.8
         })
     }  
+})
+
+
+
+$("#print-btn").on("click", function(){
+    console.log("print")
+    map.getCanvas().toBlob(function(blob){
+       console.log(blob)
+    });
+    
+
 })

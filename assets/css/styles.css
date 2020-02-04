@@ -834,6 +834,13 @@ svg text{
       box-shadow: 0 0 1px #fff;
       border: 1px solid #aaa;
   }
+
+  #print-btn{
+      position: absolute;
+      top: 40px;
+      left: 15px;
+      z-index: 100;
+  }
   #county-btn:hover{
     box-shadow: 0 0 8px #fff; 
   }
