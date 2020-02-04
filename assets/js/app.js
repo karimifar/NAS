@@ -2,7 +2,7 @@ var search_input;
 var zipList;
 var ctyList;
 var listArr;
-var api_URL= "txhealth.herokuapp.com" //"http://localhost:3306" //
+var api_URL= "https://texashealthdata.com" //"http://localhost:3306" //
 var first = true;
 var rateState;
 var notTimeout;
